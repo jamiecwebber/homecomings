@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const VideoPlayer = () => {
-
-    const StyledPlayer = styled.div`
+const StyledPlayer = styled.div`
         width: 100%;
         height: 100%;
         border: 2px solid red;
@@ -11,6 +9,8 @@ const VideoPlayer = () => {
         margin: 0px auto;
         grid-area: top;
     `
+
+const VideoPlayer = () => {
 
     return (
         <StyledPlayer>Hey hey</StyledPlayer>

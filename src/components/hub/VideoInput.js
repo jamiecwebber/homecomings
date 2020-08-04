@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+const StyledInputBox = styled.div`
+border: 2px solid black;
+border-radius: 2px;
+margin: auto;
+height: 100%;
+width: 100%;
+grid-area: ${props => props.display};
+`
+
+const StyledVideo = styled.video`
+    height: 60%;
+    width: 60%;
+    border: 1px solid black;
+`
+
 const VideoInput = (props) => {
 
-    const StyledVideo = styled.div`
-        border: 2px solid black;
-        border-radius: 2px;
-        width: 100%;
-        height: 100%;
-        margin: auto;
-        grid-area: ${props.display};
-    `
     const [videoLoaded, setVideoLoaded] = useState(false);
 
     useEffect(()=>{
@@ -22,12 +29,10 @@ const VideoInput = (props) => {
         }
     }, [props.videoSource])
 
-
     return (
-    <StyledVideo>
-        {props.display}<br/>
-        {videoLoaded.toString()}
-    </StyledVideo>
+    <StyledInputBox display={props.display}>
+        {videoLoaded ? <StyledVideo src={props.videoSource} loop='true' mute='true' autoplay='true'></StyledVideo> : "No video"}
+    </StyledInputBox>
     )
 }
 
