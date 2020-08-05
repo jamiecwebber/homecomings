@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
+import VideoContext from '../../contexts/videoContext.js';
 
 const StyledInputBox = styled.div`
-border: 2px solid black;
-border-radius: 2px;
-margin: auto;
-height: 100%;
-width: 100%;
-grid-area: ${props => props.display};
+    border: 2px solid black;
+    border-radius: 2px;
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    grid-area: ${props => props.display};
 `
 
 const StyledVideo = styled.video`
@@ -16,22 +17,34 @@ const StyledVideo = styled.video`
     border: 1px solid black;
 `
 
-const VideoInput = (props) => {
+const VideoInput = ({display, videoSource}) => {
+
+    const videoContext = useContext(VideoContext);
 
     const [videoLoaded, setVideoLoaded] = useState(false);
 
+    const vidRef = useRef(null);
+
     useEffect(()=>{
-        if (props.videoSource) {
+        if (videoSource) {
             // load the video
             setVideoLoaded(true);
         } else {
             // display prompt for video
         }
-    }, [props.videoSource])
+    }, [videoSource, videoContext])
+
+    const handleToggleVideo = () => {
+        if (!vidRef.current.paused) {
+            vidRef.current.pause();
+        } else {
+            vidRef.current.play();
+        }
+    }
 
     return (
-    <StyledInputBox display={props.display}>
-        {videoLoaded ? <StyledVideo src={props.videoSource} loop='true' mute='true' autoplay='true'></StyledVideo> : "No video"}
+    <StyledInputBox display={display}>
+        {videoLoaded ? <StyledVideo ref={vidRef} id={display} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo> : "No video"}
     </StyledInputBox>
     )
 }

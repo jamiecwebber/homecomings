@@ -13,7 +13,7 @@ const StyledPlayer = styled.div`
 const VideoPlayer = () => {
 
     return (
-        <StyledPlayer>Hey hey</StyledPlayer>
+        <StyledPlayer></StyledPlayer>
     )
 }
 
