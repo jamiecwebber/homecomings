@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import VideoContext from '../../contexts/videoContext.js';
+import { VideoContext } from '../../contexts/VideoContext.js';
 
 const StyledInputBox = styled.div`
     border: 2px solid black;
@@ -19,20 +19,27 @@ const StyledVideo = styled.video`
 
 const VideoInput = ({display, videoSource}) => {
 
-    const videoContext = useContext(VideoContext);
+    const [refs, setRefs] = useContext(VideoContext);
 
     const [videoLoaded, setVideoLoaded] = useState(false);
 
     const vidRef = useRef(null);
 
     useEffect(()=>{
+        if (!refs[display]) {
+            setRefs({...refs, [display]:vidRef.current});
+        }
+    }, [refs, display, setRefs])
+    
+    useEffect(()=>{
         if (videoSource) {
             // load the video
             setVideoLoaded(true);
+            
         } else {
             // display prompt for video
         }
-    }, [videoSource, videoContext])
+    }, [videoSource])
 
     const handleToggleVideo = () => {
         if (!vidRef.current.paused) {
@@ -44,7 +51,7 @@ const VideoInput = ({display, videoSource}) => {
 
     return (
     <StyledInputBox display={display}>
-        {videoLoaded ? <StyledVideo ref={vidRef} id={display} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo> : "No video"}
+        {videoLoaded ? <StyledVideo ref={vidRef} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo> : "No video"}
     </StyledInputBox>
     )
 }

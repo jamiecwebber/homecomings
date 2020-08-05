@@ -1,5 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 
-const VideoContext = React.createContext({ blah: 'huh'});
+const VideoContext = React.createContext([{}, () => {}]);
 
-export default VideoContext;
+
+const VideoContextProvider = (props) => {
+    const [refs, setRefs] = useState({});
+    return (
+        <VideoContext.Provider value={[refs, setRefs]}>
+            {props.children}
+        </VideoContext.Provider>
+    )
+}
+
+export { VideoContext, VideoContextProvider };

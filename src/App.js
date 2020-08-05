@@ -1,18 +1,18 @@
 import React from 'react';
 import './App.css';
-import VideoContext from './contexts/videoContext.js';
+import { VideoContextProvider } from './contexts/VideoContext.js';
 import Header from './components/hub/Header.js';
 import PerformerHub from './components/hub/PerformerHub.js';
 
 function App() {
   return (
     <div className="App">
-      <VideoContext.Provider>
+      <VideoContextProvider>
         {/* Header */}
         <Header />
         {/* Performer Hub */}
         <PerformerHub/>
-      </VideoContext.Provider>
+      </VideoContextProvider>
     </div>
   );
 }

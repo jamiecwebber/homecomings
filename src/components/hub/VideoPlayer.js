@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { VideoContext } from '../../contexts/VideoContext.js';
 
 const StyledPlayer = styled.div`
         width: 100%;
