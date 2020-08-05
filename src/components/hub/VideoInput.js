@@ -21,25 +21,13 @@ const VideoInput = ({display, videoSource}) => {
 
     const [refs, setRefs] = useContext(VideoContext);
 
-    const [videoLoaded, setVideoLoaded] = useState(false);
-
     const vidRef = useRef(null);
 
     useEffect(()=>{
         if (!refs[display]) {
             setRefs({...refs, [display]:vidRef.current});
         }
-    }, [refs, display, setRefs])
-    
-    useEffect(()=>{
-        if (videoSource) {
-            // load the video
-            setVideoLoaded(true);
-            
-        } else {
-            // display prompt for video
-        }
-    }, [videoSource])
+    }, [refs, display, setRefs, vidRef])
 
     const handleToggleVideo = () => {
         if (!vidRef.current.paused) {
@@ -51,7 +39,7 @@ const VideoInput = ({display, videoSource}) => {
 
     return (
     <StyledInputBox display={display}>
-        {videoLoaded ? <StyledVideo ref={vidRef} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo> : "No video"}
+        {videoSource ? <StyledVideo ref={vidRef} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo> : "No video"}
     </StyledInputBox>
     )
 }
