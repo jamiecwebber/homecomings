@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { VideoContext } from '../../contexts/VideoContext.js';
 
@@ -31,15 +31,23 @@ const getPixelRatio = context => {
         return (window.devicePixelRatio || 1) / backingStore;
     };
 
+
+
 const VideoPlayer = () => {
 
+    const [ videoRefs ] = useContext(VideoContext);
+
     const canvasRef = useRef(null);
-    const [playing, setPlaying] = useState(false);
-    const requestId = useRef(null);
+    const [playing, setPlaying] = useState(true);
+    // const [screenSize, setScreenSize] = useState(null);
+    
+    // useEffect(() => {
+    //     const handleWindowResize = () => setScreenSize(window.innerWidth);
+    //     window.addEventListener("resize", handleWindowResize);
+    //     return () => window.removeEventListener("resize", handleWindowResize);
+    // }, []);
 
     useEffect(() => {
-        console.log(canvasRef.current);
-
         let canvas = canvasRef.current;
         let context = canvas.getContext('2d');
 
@@ -53,23 +61,27 @@ const VideoPlayer = () => {
 
         canvas.width = width * ratio;
         canvas.height = height * ratio;
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
-        
+        // canvas.style.width = `${width}px`;
+        // canvas.style.height = `${height}px`;
+    // }, [screenSize])
+    }, []);
+
+    useEffect(() => {
+        let canvas = canvasRef.current;
+        let context = canvas.getContext('2d');
+
         let requestId;
-        let i = 0;
         const render = () => {
             context.clearRect(0, 0, canvas.width, canvas.height);
-            context.beginPath();
-            context.arc(
-                canvas.width / 2,
-                canvas.height / 2,
-                (canvas.width / 2) * Math.abs(Math.cos(i)),
-                0,
-                2 * Math.PI
-            );
-            context.fill();
-            i += 0.05;
+
+            context.drawImage(videoRefs['left'], 0, 0, canvas.width, canvas.height);
+
+            // let frame = videoRefs['left'].getImageData(0,0,canvas.width, canvas.height);
+            // canvasRef.current.putImageData(frame, 0, 0);
+
+
+            
+
             requestId = requestAnimationFrame(render);
         };
         
@@ -78,7 +90,7 @@ const VideoPlayer = () => {
         return () => {
             cancelAnimationFrame(requestId);
         }
-    }, [playing])
+    }, [playing, videoRefs])
 
     const handleCanvasClick = () => {
         setPlaying(!playing);
