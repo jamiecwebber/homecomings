@@ -33,11 +33,16 @@ const getPixelRatio = context => {
 
 
 
+
 const VideoPlayer = () => {
 
     const [ videoRefs ] = useContext(VideoContext);
 
     const canvasRef = useRef(null);
+
+    const recordingStreamRef = useRef(null);
+    const recordingChunksRef = useRef([]);
+
     const [playing, setPlaying] = useState(true);
     // const [screenSize, setScreenSize] = useState(null);
     
@@ -88,18 +93,25 @@ const VideoPlayer = () => {
             let rightImage = context.getImageData(0,0,canvas.width, canvas.height);
 
             // calculate the new frame, using the left image to store the data
-            
+
             // takes the average of the three channels for each video and plays them in r/g/b channels
+            for (let i = 0; i < leftImage.data.length; i+=4) {
+                leftImage.data[i] = 1.5*(leftImage.data[i] + leftImage.data[i+1] + leftImage.data[i+2])/3;
+                leftImage.data[i+1] = 1.5*(bottomImage.data[i] + bottomImage.data[i+1] + bottomImage.data[i+2])/3;
+                leftImage.data[i+2] = 1.5*(rightImage.data[i] + rightImage.data[i+1] + rightImage.data[i+2])/3;
+            };
+
+            // turn off one colour channel of each image
             // for (let i = 0; i < leftImage.data.length; i+=4) {
-            //     leftImage.data[i] = (leftImage.data[i] + leftImage.data[i+1] + leftImage.data[i+2])/3;
-            //     leftImage.data[i+1] = (bottomImage.data[i] + bottomImage.data[i+1] + bottomImage.data[i+2])/3;
-            //     leftImage.data[i+2] = (rightImage.data[i] + rightImage.data[i+1] + rightImage.data[i+2])/3;
+            //     leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i])/1.5;
+            //     leftImage.data[i+1] = (bottomImage.data[i+1] + rightImage.data[i+1])/1.5;
+            //     leftImage.data[i+2] = (rightImage.data[i+2] + leftImage.data[i+2])/1.5;
             // };
 
             // displays the average colour of the three videos 
-            for (let i = 0; i < leftImage.data.length; i+=1) {
-                leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i])/3;
-            };
+            // for (let i = 0; i < leftImage.data.length; i+=1) {
+            //     leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i])/3;
+            // };
 
 
 
@@ -116,11 +128,38 @@ const VideoPlayer = () => {
 
     const handleCanvasClick = () => {
         setPlaying(!playing);
+        if (playing) {
+            recordingChunksRef.current = [];
+            const stream = canvasRef.current.captureStream();
+            recordingStreamRef.current = new MediaRecorder(stream);
+            console.log(recordingStreamRef.current);
+            recordingStreamRef.current.ondataavailable = e => recordingChunksRef.current.push(e.data);
+
+            recordingStreamRef.current.start();
+            recordingStreamRef.current.onstop = (e) => {
+                console.log(recordingChunksRef.current);
+                exportVid(new Blob(recordingChunksRef.current, {type: 'video/webm;codecs=vp9'}));
+            }
+        } else {
+            recordingStreamRef.current.stop();
+        }
+    }
+
+    function exportVid(blob) {
+        console.log('in exportVid function');
+        const vid = document.createElement('video');
+        vid.src = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.download = 'myvid.webm';
+        a.href = vid.src;
+        a.click();
     }
 
     return (
         <StyledPlayer>
             <StyledCanvas ref={canvasRef} onClick={handleCanvasClick}></StyledCanvas>
+            <br />
+            {recordingChunksRef.current}
         </StyledPlayer>
     )
 }

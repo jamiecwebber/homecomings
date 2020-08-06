@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import VideoInput from './VideoInput';
 import VideoPlayer from './VideoPlayer';
-import cakeVideo from '../../media/cake.mp4';
-import danceVideo from '../../media/dance.mp4';
-import minionsVideo from '../../media/minions.mp4';
+import texture1 from '../../media/texture1.mp4';
+import texture2 from '../../media/texture2.mp4';
+import texture3 from '../../media/texture3.mp4';
 
 const StyledHub = styled.div`
     margin: auto;
@@ -28,9 +28,9 @@ const PerformerHub = () => {
     return (
         <StyledHub>
             <VideoPlayer />
-            <VideoInput display='left' videoSource={cakeVideo}/>
-            <VideoInput display='bottom' videoSource={danceVideo}/>
-            <VideoInput display='right' videoSource={minionsVideo}/>
+            <VideoInput display='left'/>
+            <VideoInput display='bottom' videoSource={texture2}/>
+            <VideoInput display='right' videoSource={texture3}/>
         </StyledHub>
     )
 }

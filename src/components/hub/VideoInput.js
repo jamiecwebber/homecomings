@@ -24,10 +24,20 @@ const VideoInput = ({display, videoSource}) => {
     const vidRef = useRef(null);
 
     useEffect(()=>{
-        if (!refs[display]) {
+        console.log(refs);
+        if (!refs[display] || refs[display] !== vidRef.current) {
             setRefs({...refs, [display]:vidRef.current});
         }
     }, [refs, display, setRefs, vidRef])
+
+    useEffect(()=>{
+        if (!videoSource) {
+            navigator.mediaDevices.getUserMedia({video:true, audio:false})
+                .then((mediaStream)=>{
+                    vidRef.current.srcObject = mediaStream;
+                });
+        }
+    }, [videoSource])
 
     const handleToggleVideo = () => {
         if (!vidRef.current.paused) {
@@ -39,7 +49,7 @@ const VideoInput = ({display, videoSource}) => {
 
     return (
     <StyledInputBox display={display}>
-        {videoSource ? <StyledVideo ref={vidRef} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo> : "No video"}
+        <StyledVideo ref={vidRef} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo>
     </StyledInputBox>
     )
 }
