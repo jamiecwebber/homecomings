@@ -72,16 +72,29 @@ const VideoPlayer = () => {
 
         let requestId;
         const render = () => {
-            context.clearRect(0, 0, canvas.width, canvas.height);
+            // context.clearRect(0, 0, canvas.width, canvas.height);
 
+            // get current data
+            let currentImage = context.getImageData(0, 0, canvas.width, canvas.height);
+
+            // get data from the three video streams
             context.drawImage(videoRefs['left'], 0, 0, canvas.width, canvas.height);
+            let leftImage = context.getImageData(0,0,canvas.width, canvas.height);
 
-            // let frame = videoRefs['left'].getImageData(0,0,canvas.width, canvas.height);
-            // canvasRef.current.putImageData(frame, 0, 0);
+            context.drawImage(videoRefs['bottom'], 0, 0, canvas.width, canvas.height);
+            let bottomImage = context.getImageData(0,0,canvas.width, canvas.height);
 
+            context.drawImage(videoRefs['right'], 0, 0, canvas.width, canvas.height);
+            let rightImage = context.getImageData(0,0,canvas.width, canvas.height);
 
-            
+            // calculate the new frame, using the left image to store the data
+            for (let i = 0; i < leftImage.data.length; i+=4) {
+                leftImage.data[i] = (leftImage.data[i] + leftImage.data[i+1] + leftImage.data[i+2])/3;
+                leftImage.data[i+1] = (bottomImage.data[i] + bottomImage.data[i+1] + bottomImage.data[i+2])/3;
+                leftImage.data[i+2] = (rightImage.data[i] + rightImage.data[i+1] + rightImage.data[i+2])/3;
+            };
 
+            context.putImageData(leftImage, 0, 0);
             requestId = requestAnimationFrame(render);
         };
         
