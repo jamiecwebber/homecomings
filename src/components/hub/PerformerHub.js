@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import VideoInput from '../atoms/VideoInput';
 import VideoPlayer from '../atoms/VideoPlayer';
@@ -8,8 +8,8 @@ import texture3 from '../../media/texture3.mp4';
 
 const StyledHub = styled.div`
     margin: auto;
-    width: 80vw;
-    height: 40vw;
+    width: 90vw;
+    height: 45vw;
     border: 2px solid black;
     border-radius: 2px;
     display: grid;
@@ -25,12 +25,36 @@ const StyledHub = styled.div`
 `
 
 const PerformerHub = () => {
+
+    
+    // video settings will be an array of settings objects that you can switch through like channels
+    // (maybe add a check and don't read off of the canvas if all colours are 0)
+    let [videoSettings, setVideoSettings] = useState(
+        [{
+            left: {
+                grayscale: false,
+                showRGB: [1,0,0],
+                canvasRef: null
+            },
+            bottom: {
+                grayscale: false,
+                showRGB: [0,1,0],
+                canvasRef: null
+            },
+            right: {
+                grayscale: false,
+                showRGB: [0,0,1],
+                canvasRef: null
+            }
+        }]); 
+    
+
     return (
         <StyledHub>
-            <VideoPlayer />
-            <VideoInput display='left' videoSource={texture1}/>
-            <VideoInput display='bottom' videoSource={texture2}/>
-            <VideoInput display='right' videoSource={texture3}/>
+            <VideoPlayer videoSettings={videoSettings} setVideoSettings={setVideoSettings} />
+            <VideoInput display='left' videoSource={texture1} videoSettings={videoSettings} setVideoSettings={setVideoSettings} />
+            <VideoInput display='bottom' videoSource={texture2} videoSettings={videoSettings} setVideoSettings={setVideoSettings} />
+            <VideoInput display='right' videoSource={texture3} videoSettings={videoSettings} setVideoSettings={setVideoSettings} />
         </StyledHub>
     )
 }

@@ -30,7 +30,7 @@ const getPixelRatio = context => {
     return (window.devicePixelRatio || 1) / backingStore;
 };
 
-const VideoInput = ({display, videoSource}) => {
+const VideoInput = ({display, videoSource, videoSettings, setVideoSettings}) => {
 
     const [refs, setRefs] = useContext(VideoContext);
 
@@ -39,10 +39,6 @@ const VideoInput = ({display, videoSource}) => {
     const vidRef = useRef(null);
     const canvasRef = useRef(null);
 
-    const [grayscale, setGrayscale] = useState(false);
-    const [showRed, setShowRed] = useState(true);
-    const [showBlue, setShowBlue] = useState(true);
-    const [showGreen, setShowGreen] = useState(true);
 
     useEffect(()=>{
         vidRef.current = document.createElement('video');
