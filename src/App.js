@@ -8,8 +8,6 @@ function App() {
   return (
     <div className="App">
       <VideoContextProvider>
-        {/* Header */}
-        <Header />
         {/* Performer Hub */}
         <PerformerHub/>
       </VideoContextProvider>

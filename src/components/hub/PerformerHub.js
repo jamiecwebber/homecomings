@@ -28,7 +28,7 @@ const PerformerHub = () => {
     return (
         <StyledHub>
             <VideoPlayer />
-            <VideoInput display='left'/>
+            <VideoInput display='left' videoSource={texture1}/>
             <VideoInput display='bottom' videoSource={texture2}/>
             <VideoInput display='right' videoSource={texture3}/>
         </StyledHub>

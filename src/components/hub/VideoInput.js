@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { VideoContext } from '../../contexts/VideoContext.js';
 
@@ -24,7 +24,6 @@ const VideoInput = ({display, videoSource}) => {
     const vidRef = useRef(null);
 
     useEffect(()=>{
-        console.log(refs);
         if (!refs[display] || refs[display] !== vidRef.current) {
             setRefs({...refs, [display]:vidRef.current});
         }

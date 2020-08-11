@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { VideoContext } from '../../contexts/VideoContext.js';
+import VideoRecorder from '../atoms/VideoRecorder.js';
 
 const StyledPlayer = styled.div`
     width: 100%;
@@ -31,19 +32,14 @@ const getPixelRatio = context => {
         return (window.devicePixelRatio || 1) / backingStore;
     };
 
-
-
-
 const VideoPlayer = () => {
 
     const [ videoRefs ] = useContext(VideoContext);
 
     const canvasRef = useRef(null);
 
-    const recordingStreamRef = useRef(null);
-    const recordingChunksRef = useRef([]);
+    const [isPlaying, setIsPlaying] = useState(false);
 
-    const [playing, setPlaying] = useState(true);
     // const [screenSize, setScreenSize] = useState(null);
     
     // useEffect(() => {
@@ -52,6 +48,7 @@ const VideoPlayer = () => {
     //     return () => window.removeEventListener("resize", handleWindowResize);
     // }, []);
 
+    // on loading, set inner size of canvas context
     useEffect(() => {
         let canvas = canvasRef.current;
         let context = canvas.getContext('2d');
@@ -66,11 +63,9 @@ const VideoPlayer = () => {
 
         canvas.width = width * ratio;
         canvas.height = height * ratio;
-        // canvas.style.width = `${width}px`;
-        // canvas.style.height = `${height}px`;
-    // }, [screenSize])
     }, []);
 
+    // the animation loop that renders the canvas
     useEffect(() => {
         let canvas = canvasRef.current;
         let context = canvas.getContext('2d');
@@ -80,7 +75,7 @@ const VideoPlayer = () => {
             // context.clearRect(0, 0, canvas.width, canvas.height);
 
             // get current data
-            let currentImage = context.getImageData(0, 0, canvas.width, canvas.height);
+            // let currentImage = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // get data from the three video streams
             context.drawImage(videoRefs['left'], 0, 0, canvas.width, canvas.height);
@@ -113,53 +108,25 @@ const VideoPlayer = () => {
             //     leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i])/3;
             // };
 
-
-
             context.putImageData(leftImage, 0, 0);
             requestId = requestAnimationFrame(render);
         };
         
-        playing ? cancelAnimationFrame(requestId) : render();
+        isPlaying ? render() : cancelAnimationFrame(requestId);
 
         return () => {
             cancelAnimationFrame(requestId);
         }
-    }, [playing, videoRefs])
+    }, [isPlaying, videoRefs])
 
-    const handleCanvasClick = () => {
-        setPlaying(!playing);
-        if (playing) {
-            recordingChunksRef.current = [];
-            const stream = canvasRef.current.captureStream();
-            recordingStreamRef.current = new MediaRecorder(stream);
-            console.log(recordingStreamRef.current);
-            recordingStreamRef.current.ondataavailable = e => recordingChunksRef.current.push(e.data);
-
-            recordingStreamRef.current.start();
-            recordingStreamRef.current.onstop = (e) => {
-                console.log(recordingChunksRef.current);
-                exportVid(new Blob(recordingChunksRef.current, {type: 'video/webm;codecs=vp9'}));
-            }
-        } else {
-            recordingStreamRef.current.stop();
-        }
-    }
-
-    function exportVid(blob) {
-        console.log('in exportVid function');
-        const vid = document.createElement('video');
-        vid.src = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.download = 'myvid.webm';
-        a.href = vid.src;
-        a.click();
+    const toggleIsPlaying = () => {
+        setIsPlaying(!isPlaying); // this triggers the above effect and starts the animation loop
     }
 
     return (
         <StyledPlayer>
-            <StyledCanvas ref={canvasRef} onClick={handleCanvasClick}></StyledCanvas>
-            <br />
-            {recordingChunksRef.current}
+            <StyledCanvas ref={canvasRef} onClick={toggleIsPlaying}></StyledCanvas>
+            <VideoRecorder canvasRef={canvasRef} isPlaying={isPlaying}/>
         </StyledPlayer>
     )
 }

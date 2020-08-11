@@ -2,7 +2,6 @@ import React, {useState} from "react";
 
 const VideoContext = React.createContext([{}, () => {}]);
 
-
 const VideoContextProvider = (props) => {
     const [refs, setRefs] = useState({});
     return (
