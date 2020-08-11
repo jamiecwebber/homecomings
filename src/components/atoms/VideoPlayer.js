@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { VideoContext } from '../../contexts/VideoContext.js';
-import VideoRecorder from '../atoms/VideoRecorder.js';
+import VideoRecorder from './VideoRecorder.js';
 
 const StyledPlayer = styled.div`
     width: 100%;

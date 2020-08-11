@@ -9,12 +9,6 @@ const StyledButton = styled.button`
 
 const VideoRecorder = ({ canvasRef, isPlaying }) => {
 
-    // recording behaviour:
-    // if video is not playing, clicking button will make it start recording when it starts playing
-    // if video is currently playing, clicking button will make it start recording
-    // if video stops while recording, stop recording and create link, can make several links (maybe be able to scroll horizontally links)
-    // button press while playing stops recording and creates link.
-
     const [isRecordArmed, setIsRecordArmed] = useState(true);
     const [isRecording, setIsRecording] = useState(false);
     const [isDownloadReady, setIsDownloadReady] = useState(false);
