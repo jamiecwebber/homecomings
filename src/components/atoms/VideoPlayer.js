@@ -32,11 +32,11 @@ const getPixelRatio = context => {
         return (window.devicePixelRatio || 1) / backingStore;
     };
 
-const VideoPlayer = (videoSettings, setVideoSettings) => {
+const VideoPlayer = ({videoSettings, setVideoSettings, currentChannel, setCurrentChannel}) => {
 
-    const [ videoRefs ] = useContext(VideoContext);
 
     const canvasRef = useRef(null);
+    let [canvasRefs, setCanvasRefs] = useState({});
 
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -47,6 +47,20 @@ const VideoPlayer = (videoSettings, setVideoSettings) => {
     //     window.addEventListener("resize", handleWindowResize);
     //     return () => window.removeEventListener("resize", handleWindowResize);
     // }, []);
+
+    // set the canvas refs and keep track if they change
+    useEffect(()=> {
+        console.log(videoSettings);
+        console.log(videoSettings[currentChannel]['left']);
+        Object.keys(videoSettings[currentChannel]).map((key)=>{
+            setCanvasRefs(()=>{
+                let newRefs = canvasRefs;
+                newRefs[key] = videoSettings[currentChannel][key].canvasRef.current.getContext('2d');
+                return newRefs;
+            });
+            return null;
+        })
+    }, [videoSettings, canvasRefs, currentChannel]);
 
     // on loading, set inner size of canvas context
     useEffect(() => {
@@ -79,13 +93,13 @@ const VideoPlayer = (videoSettings, setVideoSettings) => {
 
             // get data from the three video streams
             //context.drawImage(videoRefs['left'], 0, 0, canvas.width, canvas.height);
-            let leftImage = videoRefs['left'].getContext('2d').getImageData(0,0,canvas.width, canvas.height);
+            let leftImage = canvasRefs['left'].getImageData(0,0,canvas.width, canvas.height);
 
             //context.drawImage(videoRefs['bottom'], 0, 0, canvas.width, canvas.height);
-            let bottomImage = videoRefs['bottom'].getContext('2d').getImageData(0,0,canvas.width, canvas.height);
+            let bottomImage = canvasRefs['bottom'].getImageData(0,0,canvas.width, canvas.height);
 
             //context.drawImage(videoRefs['right'], 0, 0, canvas.width, canvas.height);
-            let rightImage = videoRefs['right'].getContext('2d').getImageData(0,0,canvas.width, canvas.height);
+            let rightImage = canvasRefs['right'].getImageData(0,0,canvas.width, canvas.height);
 
             // calculate the new frame, using the left image to store the data
 
@@ -117,7 +131,7 @@ const VideoPlayer = (videoSettings, setVideoSettings) => {
         return () => {
             cancelAnimationFrame(requestId);
         }
-    }, [isPlaying, videoRefs])
+    }, [isPlaying, canvasRefs])
 
     const toggleIsPlaying = () => {
         setIsPlaying(!isPlaying); // this triggers the above effect and starts the animation loop

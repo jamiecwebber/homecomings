@@ -30,12 +30,11 @@ const getPixelRatio = context => {
     return (window.devicePixelRatio || 1) / backingStore;
 };
 
-const VideoInput = ({display, videoSource, videoSettings, setVideoSettings}) => {
+const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, currentChannel}) => {
 
     // const [refs, setRefs] = useContext(VideoContext);
 
     const [isPlaying, setIsPlaying ] = useState(false);
-    const [channel, setChannel] = useState(0);
 
     const vidRef = useRef(null);
     const canvasRef = useRef(null);
@@ -64,24 +63,16 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings}) => 
         canvas.height = height * ratio;
     }, []);
 
-    // this mess - this needs to be updated to track current state AND settings
-    // // using context and also props is redundant here :/
-    // useEffect(()=>{
-    //     if (!refs[display] || refs[display] !== canvasRef.current) {
-    //         setRefs({...refs, [display]:canvasRef.current});
-    //     }
-    // }, [refs, display, setRefs, canvasRef])
-
     // on loading, add the canvasRef to the videoSettings and make sure it stays up to date
     useEffect(()=>{
-        if (videoSettings[channel][display].canvasRef !== canvasRef) {
+        if (videoSettings[currentChannel][display].canvasRef !== canvasRef) {
             setVideoSettings(()=>{
                 let newSettings = videoSettings;
-                newSettings[channel][display].canvasRef = canvasRef;
+                newSettings[currentChannel][display].canvasRef = canvasRef;
                 return newSettings;
             })
         }
-    }, [canvasRef, display, channel, videoSettings, setVideoSettings])
+    }, [canvasRef, display, currentChannel, videoSettings, setVideoSettings])
 
     // handle changing videoSource, not implemented yet  VIDEO
     useEffect(()=>{
