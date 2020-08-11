@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { VideoContext } from '../../contexts/VideoContext.js';
 
@@ -11,7 +11,7 @@ const StyledInputBox = styled.div`
     grid-area: ${props => props.display};
 `
 
-const StyledVideo = styled.video`
+const StyledCanvas = styled.canvas`
     height: 60%;
     width: 60%;
     border: 1px solid black;
@@ -21,13 +21,22 @@ const VideoInput = ({display, videoSource}) => {
 
     const [refs, setRefs] = useContext(VideoContext);
 
+    const [isPlaying, setIsPlaying ] = useState(false);
+
     const vidRef = useRef(null);
+    const canvasRef = useRef(null);
 
     useEffect(()=>{
-        if (!refs[display] || refs[display] !== vidRef.current) {
-            setRefs({...refs, [display]:vidRef.current});
+        vidRef.current = document.createElement('video');
+        vidRef.current.loop = true;
+        vidRef.current.muted = true;
+    },[])
+
+    useEffect(()=>{
+        if (!refs[display] || refs[display] !== canvasRef.current) {
+            setRefs({...refs, [display]:canvasRef.current});
         }
-    }, [refs, display, setRefs, vidRef])
+    }, [refs, display, setRefs, canvasRef])
 
     useEffect(()=>{
         if (!videoSource) {
@@ -36,19 +45,35 @@ const VideoInput = ({display, videoSource}) => {
                     vidRef.current.srcObject = mediaStream;
                 });
         }
+        vidRef.current.src = videoSource;
     }, [videoSource])
 
-    const handleToggleVideo = () => {
-        if (!vidRef.current.paused) {
-            vidRef.current.pause();
-        } else {
-            vidRef.current.play();
+    useEffect(() => {
+        let canvas = canvasRef.current;
+        let context = canvas.getContext('2d');
+
+        let requestId;
+        const render = () => {
+            context.drawImage(vidRef.current, 0, 0, canvas.width, canvas.height);
+           
+            requestId = requestAnimationFrame(render);
+        };
+        
+        isPlaying ? render() : cancelAnimationFrame(requestId);
+
+        return () => {
+            cancelAnimationFrame(requestId);
         }
+    }, [isPlaying])
+
+    const handleToggleVideo = () => {
+        isPlaying ? vidRef.current.pause() : vidRef.current.play();
+        setIsPlaying(!isPlaying);
     }
 
     return (
     <StyledInputBox display={display}>
-        <StyledVideo ref={vidRef} src={videoSource} onClick={handleToggleVideo} loop muted></StyledVideo>
+        <StyledCanvas ref={canvasRef} onClick={handleToggleVideo}></StyledCanvas>
     </StyledInputBox>
     )
 }
