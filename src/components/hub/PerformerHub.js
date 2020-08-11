@@ -1,10 +1,8 @@
-import React, {useState} from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import VideoInput from '../atoms/VideoInput';
 import VideoPlayer from '../atoms/VideoPlayer';
-import texture1 from '../../media/texture1.mp4';
-import texture2 from '../../media/texture2.mp4';
-import texture3 from '../../media/texture3.mp4';
+import { VideoContext } from '../../contexts/VideoContext';
 
 const StyledHub = styled.div`
     margin: auto;
@@ -26,7 +24,9 @@ const StyledHub = styled.div`
 
 const PerformerHub = () => {
 
-    
+    //let videoContext = useContext(VideoContext);
+
+    const { videos, setVideos, devices, setDevices } = useContext(VideoContext);
     // video settings will be an array of settings objects that you can switch through like channels
     // (maybe add a check and don't read off of the canvas if all colours are 0)
     const [videoSettings, setVideoSettings] = useState(
@@ -60,17 +60,17 @@ const PerformerHub = () => {
                 currentChannel={currentChannel} setCurrentChannel={setCurrentChannel}/>
             <VideoInput 
                 display='left' 
-                videoSource={texture1} 
+                videoSource={videos[0]} 
                 videoSettings={videoSettings} setVideoSettings={setVideoSettings} 
                 currentChannel={currentChannel}/>
             <VideoInput 
                 display='bottom' 
-                videoSource={texture2} 
+                videoSource={videos[1]} 
                 videoSettings={videoSettings} setVideoSettings={setVideoSettings} 
                 currentChannel={currentChannel}/>
             <VideoInput 
                 display='right' 
-                videoSource={texture3} 
+                videoSource={videos[2]} 
                 videoSettings={videoSettings} setVideoSettings={setVideoSettings} 
                 currentChannel={currentChannel}/>
         </StyledHub>
