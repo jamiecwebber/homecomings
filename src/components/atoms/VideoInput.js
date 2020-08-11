@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
+import VideoInputControls from './VideoInputControls.js';
 // import { VideoContext } from '../../contexts/VideoContext.js';
 
 const StyledInputBox = styled.div`
@@ -140,6 +141,12 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, curr
     return (
     <StyledInputBox display={display}>
         <StyledCanvas ref={canvasRef} onClick={handleToggleVideo}></StyledCanvas>
+        <VideoInputControls 
+            videoSettings={videoSettings} setVideoSettings={setVideoSettings}
+            display={display}
+            currentChannel={currentChannel}
+            >
+        </VideoInputControls>
     </StyledInputBox>
     )
 }
