@@ -50,8 +50,6 @@ const VideoPlayer = ({videoSettings, setVideoSettings, currentChannel, setCurren
 
     // set the canvas refs and keep track if they change
     useEffect(()=> {
-        console.log(videoSettings);
-        console.log(videoSettings[currentChannel]['left']);
         Object.keys(videoSettings[currentChannel]).map((key)=>{
             setCanvasRefs(()=>{
                 let newRefs = canvasRefs;
@@ -86,9 +84,9 @@ const VideoPlayer = ({videoSettings, setVideoSettings, currentChannel, setCurren
 
         let requestId;
         const render = () => {
-            // context.clearRect(0, 0, canvas.width, canvas.height);
+            context.clearRect(0, 0, canvas.width, canvas.height);
 
-            // get current data
+            // get current datas
             // let currentImage = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // get data from the three video streams
@@ -117,10 +115,13 @@ const VideoPlayer = ({videoSettings, setVideoSettings, currentChannel, setCurren
             //     leftImage.data[i+2] = (rightImage.data[i+2] + leftImage.data[i+2])/1.5;
             // };
 
-            // displays the average colour of the three videos 
-            for (let i = 0; i < leftImage.data.length; i+=1) {
-                leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i])/2;
-            };
+            // displays the average colour of the three videos
+            for (let i = 0; i < leftImage.data.length; i+=4) {
+                    leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i]);
+                    leftImage.data[i+1] = (leftImage.data[i+1] + bottomImage.data[i+1] + rightImage.data[i+1]);
+                    leftImage.data[i+2] = (leftImage.data[i+2] + bottomImage.data[i+2] + rightImage.data[i+2]);
+                    leftImage.data[i+3] = 256;
+                };
 
             context.putImageData(leftImage, 0, 0);
             requestId = requestAnimationFrame(render);

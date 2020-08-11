@@ -34,16 +34,19 @@ const PerformerHub = () => {
             'left': {
                 grayscale: false,
                 showRGB: [1,0,0],
+                isBlackTransparent: true,
                 canvasRef: null
             },
             'bottom': {
                 grayscale: false,
                 showRGB: [0,1,0],
+                isBlackTransparent: true,
                 canvasRef: null
             },
             'right': {
                 grayscale: false,
                 showRGB: [0,0,1],
+                isBlackTransparent: true,
                 canvasRef: null
             }
         }]); 

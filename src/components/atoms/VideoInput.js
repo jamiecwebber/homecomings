@@ -93,6 +93,35 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, curr
         let requestId;
         const render = () => {
             context.drawImage(vidRef.current, 0, 0, canvas.width, canvas.height);
+            let settings = videoSettings[currentChannel][display]
+            let newImage = context.getImageData(0,0,canvas.width, canvas.height);
+
+            // this is where the next frame is calculated, depending on the current settings
+            
+            for (let i = 0; i < newImage.data.length; i+=4) {
+
+                if (settings.grayscale) {
+                    let gray = (newImage.data[i] + newImage.data[i+1] + newImage.data[i+2])/3;
+                    newImage.data[i] = gray;
+                    newImage.data[i+1] = gray;
+                    newImage.data[i+2] = gray;
+                };
+
+                newImage.data[i] *= settings.showRGB[0];
+                newImage.data[i+1] *= settings.showRGB[1];
+                newImage.data[i+2] *= settings.showRGB[2];
+
+
+                if (settings.isBlackTransparent) {
+                    let gray = (newImage.data[i] + newImage.data[i+1] + newImage.data[i+2])/3;
+                    if (gray <= 20) {
+                        newImage.data[i+3] = (gray/20);
+                    }
+                }
+            }
+
+            context.putImageData(newImage, 0, 0);
+
             requestId = requestAnimationFrame(render);
         };
         
@@ -101,7 +130,7 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, curr
         return () => {
             cancelAnimationFrame(requestId);
         }
-    }, [isPlaying])
+    }, [isPlaying, currentChannel, display, videoSettings])
 
     const handleToggleVideo = () => {
         isPlaying ? vidRef.current.pause() : vidRef.current.play();
