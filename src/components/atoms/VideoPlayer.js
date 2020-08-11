@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { VideoContext } from '../../contexts/VideoContext.js';
+// import { VideoContext } from '../../contexts/VideoContext.js';
 import VideoRecorder from './VideoRecorder.js';
 
 const StyledPlayer = styled.div`
@@ -32,7 +32,7 @@ const getPixelRatio = context => {
         return (window.devicePixelRatio || 1) / backingStore;
     };
 
-const VideoPlayer = () => {
+const VideoPlayer = (videoSettings, setVideoSettings) => {
 
     const [ videoRefs ] = useContext(VideoContext);
 

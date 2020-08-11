@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { VideoContext } from '../../contexts/VideoContext.js';
+// import { VideoContext } from '../../contexts/VideoContext.js';
 
 const StyledInputBox = styled.div`
     border: 2px solid black;
@@ -32,21 +32,22 @@ const getPixelRatio = context => {
 
 const VideoInput = ({display, videoSource, videoSettings, setVideoSettings}) => {
 
-    const [refs, setRefs] = useContext(VideoContext);
+    // const [refs, setRefs] = useContext(VideoContext);
 
     const [isPlaying, setIsPlaying ] = useState(false);
+    const [channel, setChannel] = useState(0);
 
     const vidRef = useRef(null);
     const canvasRef = useRef(null);
 
-
+    // on loading, create video element but don't add it to the page   VIDEO
     useEffect(()=>{
         vidRef.current = document.createElement('video');
         vidRef.current.loop = true;
         vidRef.current.muted = true;
     },[])
 
-    // on loading, set inner size of canvas context
+    // on loading, set inner size of canvas context  CANVAS
     useEffect(() => {
         let canvas = canvasRef.current;
         let context = canvas.getContext('2d');
@@ -63,12 +64,26 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings}) => 
         canvas.height = height * ratio;
     }, []);
 
-    useEffect(()=>{
-        if (!refs[display] || refs[display] !== canvasRef.current) {
-            setRefs({...refs, [display]:canvasRef.current});
-        }
-    }, [refs, display, setRefs, canvasRef])
+    // this mess - this needs to be updated to track current state AND settings
+    // // using context and also props is redundant here :/
+    // useEffect(()=>{
+    //     if (!refs[display] || refs[display] !== canvasRef.current) {
+    //         setRefs({...refs, [display]:canvasRef.current});
+    //     }
+    // }, [refs, display, setRefs, canvasRef])
 
+    // on loading, add the canvasRef to the videoSettings and make sure it stays up to date
+    useEffect(()=>{
+        if (videoSettings[channel][display].canvasRef !== canvasRef) {
+            setVideoSettings(()=>{
+                let newSettings = videoSettings;
+                newSettings[channel][display].canvasRef = canvasRef;
+                return newSettings;
+            })
+        }
+    }, [canvasRef, display, channel, videoSettings, setVideoSettings])
+
+    // handle changing videoSource, not implemented yet  VIDEO
     useEffect(()=>{
         if (!videoSource) {
             navigator.mediaDevices.getUserMedia({video:true, audio:false})
@@ -79,6 +94,7 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings}) => 
         vidRef.current.src = videoSource;
     }, [videoSource])
 
+    // animation loop, controlled by isPlaying
     useEffect(() => {
         let canvas = canvasRef.current;
         let context = canvas.getContext('2d');
@@ -86,7 +102,6 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings}) => 
         let requestId;
         const render = () => {
             context.drawImage(vidRef.current, 0, 0, canvas.width, canvas.height);
-           
             requestId = requestAnimationFrame(render);
         };
         

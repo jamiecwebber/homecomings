@@ -31,17 +31,17 @@ const PerformerHub = () => {
     // (maybe add a check and don't read off of the canvas if all colours are 0)
     let [videoSettings, setVideoSettings] = useState(
         [{
-            left: {
+            'left': {
                 grayscale: false,
                 showRGB: [1,0,0],
                 canvasRef: null
             },
-            bottom: {
+            'bottom': {
                 grayscale: false,
                 showRGB: [0,1,0],
                 canvasRef: null
             },
-            right: {
+            'right': {
                 grayscale: false,
                 showRGB: [0,0,1],
                 canvasRef: null
