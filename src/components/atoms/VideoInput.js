@@ -12,10 +12,23 @@ const StyledInputBox = styled.div`
 `
 
 const StyledCanvas = styled.canvas`
-    height: 60%;
-    width: 60%;
+    height: 90%;
+    width: 90%;
     border: 1px solid black;
 `
+
+const getPixelRatio = context => {
+    var backingStore =
+    context.backingStorePixelRatio ||
+    context.webkitBackingStorePixelRatio ||
+    context.mozBackingStorePixelRatio ||
+    context.msBackingStorePixelRatio ||
+    context.oBackingStorePixelRatio ||
+    context.backingStorePixelRatio ||
+    1;
+    
+    return (window.devicePixelRatio || 1) / backingStore;
+};
 
 const VideoInput = ({display, videoSource}) => {
 
@@ -26,11 +39,33 @@ const VideoInput = ({display, videoSource}) => {
     const vidRef = useRef(null);
     const canvasRef = useRef(null);
 
+    const [grayscale, setGrayscale] = useState(false);
+    const [showRed, setShowRed] = useState(true);
+    const [showBlue, setShowBlue] = useState(true);
+    const [showGreen, setShowGreen] = useState(true);
+
     useEffect(()=>{
         vidRef.current = document.createElement('video');
         vidRef.current.loop = true;
         vidRef.current.muted = true;
     },[])
+
+    // on loading, set inner size of canvas context
+    useEffect(() => {
+        let canvas = canvasRef.current;
+        let context = canvas.getContext('2d');
+
+        let ratio = getPixelRatio(context);
+        let width = getComputedStyle(canvas)
+            .getPropertyValue('width')
+            .slice(0, -2);
+        let height = getComputedStyle(canvas)
+            .getPropertyValue('height')
+            .slice(0, -2);
+
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+    }, []);
 
     useEffect(()=>{
         if (!refs[display] || refs[display] !== canvasRef.current) {

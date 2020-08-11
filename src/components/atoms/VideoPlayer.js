@@ -78,23 +78,23 @@ const VideoPlayer = () => {
             // let currentImage = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // get data from the three video streams
-            context.drawImage(videoRefs['left'], 0, 0, canvas.width, canvas.height);
-            let leftImage = context.getImageData(0,0,canvas.width, canvas.height);
+            //context.drawImage(videoRefs['left'], 0, 0, canvas.width, canvas.height);
+            let leftImage = videoRefs['left'].getContext('2d').getImageData(0,0,canvas.width, canvas.height);
 
-            context.drawImage(videoRefs['bottom'], 0, 0, canvas.width, canvas.height);
-            let bottomImage = context.getImageData(0,0,canvas.width, canvas.height);
+            //context.drawImage(videoRefs['bottom'], 0, 0, canvas.width, canvas.height);
+            let bottomImage = videoRefs['bottom'].getContext('2d').getImageData(0,0,canvas.width, canvas.height);
 
-            context.drawImage(videoRefs['right'], 0, 0, canvas.width, canvas.height);
-            let rightImage = context.getImageData(0,0,canvas.width, canvas.height);
+            //context.drawImage(videoRefs['right'], 0, 0, canvas.width, canvas.height);
+            let rightImage = videoRefs['right'].getContext('2d').getImageData(0,0,canvas.width, canvas.height);
 
             // calculate the new frame, using the left image to store the data
 
             // takes the average of the three channels for each video and plays them in r/g/b channels
-            for (let i = 0; i < leftImage.data.length; i+=4) {
-                leftImage.data[i] = 1.5*(leftImage.data[i] + leftImage.data[i+1] + leftImage.data[i+2])/3;
-                leftImage.data[i+1] = 1.5*(bottomImage.data[i] + bottomImage.data[i+1] + bottomImage.data[i+2])/3;
-                leftImage.data[i+2] = 1.5*(rightImage.data[i] + rightImage.data[i+1] + rightImage.data[i+2])/3;
-            };
+            // for (let i = 0; i < leftImage.data.length; i+=4) {
+            //     leftImage.data[i] = 1.5*(leftImage.data[i] + leftImage.data[i+1] + leftImage.data[i+2])/3;
+            //     leftImage.data[i+1] = 1.5*(bottomImage.data[i] + bottomImage.data[i+1] + bottomImage.data[i+2])/3;
+            //     leftImage.data[i+2] = 1.5*(rightImage.data[i] + rightImage.data[i+1] + rightImage.data[i+2])/3;
+            // };
 
             // turn off one colour channel of each image
             // for (let i = 0; i < leftImage.data.length; i+=4) {
@@ -104,9 +104,9 @@ const VideoPlayer = () => {
             // };
 
             // displays the average colour of the three videos 
-            // for (let i = 0; i < leftImage.data.length; i+=1) {
-            //     leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i])/3;
-            // };
+            for (let i = 0; i < leftImage.data.length; i+=1) {
+                leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i])/2;
+            };
 
             context.putImageData(leftImage, 0, 0);
             requestId = requestAnimationFrame(render);
