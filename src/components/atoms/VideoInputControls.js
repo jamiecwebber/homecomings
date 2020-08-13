@@ -17,8 +17,16 @@ const StyledButtonRow = styled.div`
 
 const StyledButton = styled.button`
     border-radius: 3px;
-    background: salmon
-    ;
+    background: salmon;
+`
+
+const ColourButton = styled.button`
+    width: 35px;
+    height: 35px;
+    border-radius: 3px;
+    color: ${ props => props.uncheckedColour }
+    border: 2px solid ${ props => props.uncheckedColour }
+    background: ${ props => props.checked ? props.checkedColour : props.uncheckedColour }
 `
 
 const VideoInputControls = ( { display } ) => {
@@ -32,13 +40,6 @@ const VideoInputControls = ( { display } ) => {
     const [showColour, setShowColour] = useState([0,0,0]);
 
     // // keep local settings up to date with global settings
-    // useEffect(()=>{
-    //     console.log(display);
-    //     console.log(currentSettings);
-    //     console.log(currentSettings[display]);
-    //     setLocalSettings(currentSettings[display]);
-    // },[currentSettings, setLocalSettings, display]);
-
     useEffect(()=>{
         if (currentSettings[display]) {
             prevSettings.current = currentSettings[display];
@@ -51,7 +52,7 @@ const VideoInputControls = ( { display } ) => {
 
     // checks for updates to local settings and updates global settings accordingly
     useEffect(()=>{
-        if (prevSettings.current !== localSettings) {
+        if (prevSettings.current !== localSettings) { // not sure this is right
             settingsDispatch({
                 type: "UPDATE_SETTINGS",
                 display: display,
@@ -88,9 +89,9 @@ const VideoInputControls = ( { display } ) => {
                     {isBlackTransparent ? "Don't make black transparent" : "Make black transparent"}</StyledButton>
             </StyledButtonRow>
             <StyledButtonRow>
-                <StyledButton onClick={()=>toggleColour(0)}>{showColour[0] ? "hide red" : "show red"}</StyledButton>
-                <StyledButton onClick={()=>toggleColour(1)}>{showColour[1] ? "hide green" : "show green"}</StyledButton>
-                <StyledButton onClick={()=>toggleColour(2)}>{showColour[2] ? "hide blue" : "show blue"}</StyledButton>
+                <ColourButton checked={showColour[0]} checkedColour={'red'} uncheckedColour={'dark red'} onClick={()=>toggleColour(0)}>✓</ColourButton>
+                <ColourButton checked={showColour[1]} checkedColour={'green'} uncheckedColour={'dark green'} onClick={()=>toggleColour(1)}>✓</ColourButton>
+                <ColourButton checked={showColour[2]} checkedColour={'blue'} uncheckedColour={'dark blue'}onClick={()=>toggleColour(2)}>✓</ColourButton>
             </StyledButtonRow>
         </StyledContainer>
     )
