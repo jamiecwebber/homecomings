@@ -23,15 +23,13 @@ const StyledButton = styled.button`
 
 const VideoInputControls = ( { display } ) => {
 
-    const [ localSettings, setLocalSettings ] = useState({});
     const { currentSettings, settingsDispatch } = useContext(VideoContext);
+    const [ localSettings, setLocalSettings ] = useState(currentSettings[display]);
     const prevSettings = useRef();
 
     const [grayscale, setGrayscale] = useState(false);
-    // const [isBlackTransparent, setIsBlackTransparent] = useState(currentSettings[display].isBlackTransparent);
-    // const [showRed, setShowRed] = useState(currentSettings[display].showRGB[0] === 1 ? true : false);
-    // const [showGreen, setShowGreen] = useState(currentSettings[display].showRGB[1] === 1 ? true : false);
-    // const [showBlue, setShowBlue] = useState(currentSettings[display].showRGB[2] === 1 ? true : false);
+    const [isBlackTransparent, setIsBlackTransparent] = useState(false);
+    const [showColour, setShowColour] = useState([1,1,1]);
 
     // // keep local settings up to date with global settings
     // useEffect(()=>{
@@ -43,73 +41,39 @@ const VideoInputControls = ( { display } ) => {
 
     useEffect(()=>{
         if (currentSettings) {
+            console.log("current settings changed");
             console.log(currentSettings);
+            prevSettings.current = currentSettings[display];
             setLocalSettings(currentSettings[display]);
         }
     }, [setLocalSettings, currentSettings, display])
 
     // checks for updates to local settings and updates global settings accordingly
     useEffect(()=>{
-        settingsDispatch({
-            action: "UPDATE_SETTINGS",
-            display: display,
-            payload: localSettings
-        })
+        if (prevSettings.current !== localSettings) {
+            settingsDispatch({
+                type: "UPDATE_SETTINGS",
+                display: display,
+                payload: localSettings
+            })
+        }
     },[display, settingsDispatch, localSettings])
 
-    // function toggleGrayscale() {
-    //     setCurrentSettings((prevState)=>{
-    //         console.log(`toggling grayscale on ${display}`)
-    //         return ( {...prevState,  } )
-    //     })
-    //     setGrayscale(!grayscale);
-    // }
-
-    // function toggleIsBlackTransparent() {
-    //     setCurrentSettings((prevState)=>{
-    //         let newSettings = videoSettings;
-    //         newSettings[currentChannel][display].isBlackTransparent = !isBlackTransparent;
-    //         return newSettings;
-    //     })
-    //     setIsBlackTransparent(!isBlackTransparent);
-    // }
-
-    // function toggleRed() {
-    //     setCurrentSettings((prevState)=>{
-    //         let newSettings = videoSettings;
-    //         newSettings[currentChannel][display].showRGB[0] = showRed ? 0 : 1;
-    //         return newSettings;
-    //     })
-    //     setShowRed(!showRed);
-    // }
-
-    // function toggleGreen() {
-    //     setCurrentSettings((prevState)=>{
-    //         let newSettings = videoSettings;
-    //         newSettings[currentChannel][display].showRGB[1] = showGreen ? 0 : 1;
-    //         return newSettings;
-    //     })
-    //     setShowGreen(!showGreen);
-    // }
-
-    // function toggleBlue() {
-    //     setCurrentSettings((prevState)=>{
-    //         let newSettings = videoSettings;
-    //         newSettings[currentChannel][display].showRGB[2] = showBlue ? 0 : 1;
-    //         return newSettings;
-    //     })
-    //     setShowBlue(!showBlue);
-    // }
-
-    
-
-    // function updateSettings() {
-    //     setLocalSettings((prev)=> { return { grayscale: !prev.grayscale } })
-    // }
-
     function toggleGrayscale() {
-        setLocalSettings({grayscale: !grayscale});
+        setLocalSettings({...localSettings, grayscale: !grayscale});
         setGrayscale(!grayscale);
+    }
+
+    function toggleIsBlackTransparent() {
+        setLocalSettings({...localSettings, isBlackTransparent: !isBlackTransparent});
+        setIsBlackTransparent(!isBlackTransparent);
+    }
+
+    function toggleColour(colour) {
+        let newRGB = localSettings.showRGB;
+        newRGB[colour] = newRGB[colour] ? 0 : 1;
+        setLocalSettings({...localSettings, showRGB: newRGB})
+        setShowColour(newRGB);
     }
 
     return (
@@ -119,13 +83,14 @@ const VideoInputControls = ( { display } ) => {
                 <StyledButton onClick={toggleGrayscale}>
                     {grayscale ? "Don't filter to grayscale" : "Filter to grayscale"}
                 </StyledButton>
-                {/* <StyledButton onClick={toggleIsBlackTransparent}>{isBlackTransparent ? "Don't make black transparent" : "Make black transparent"}</StyledButton> */}
+                <StyledButton onClick={toggleIsBlackTransparent}>
+                    {isBlackTransparent ? "Don't make black transparent" : "Make black transparent"}</StyledButton>
             </StyledButtonRow>
-            {/* <StyledButtonRow>
-                <StyledButton onClick={toggleRed}>{showRed ? "hide red" : "show red"}</StyledButton>
-                <StyledButton onClick={toggleGreen}>{showGreen ? "hide green" : "show green"}</StyledButton>
-                <StyledButton onClick={toggleBlue}>{showBlue ? "hide blue" : "show blue"}</StyledButton>
-            </StyledButtonRow> */}
+            <StyledButtonRow>
+                <StyledButton onClick={()=>toggleColour(0)}>{showColour[0] ? "hide red" : "show red"}</StyledButton>
+                <StyledButton onClick={()=>toggleColour(1)}>{showColour[1] ? "hide green" : "show green"}</StyledButton>
+                <StyledButton onClick={()=>toggleColour(2)}>{showColour[2] ? "hide blue" : "show blue"}</StyledButton>
+            </StyledButtonRow>
         </StyledContainer>
     )
 }

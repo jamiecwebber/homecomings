@@ -31,8 +31,10 @@ const VideoContextProvider = (props) => {
 
     const reducer = (state, action) => {
         console.log('hello from reducer');
+        console.log(action);
         switch(action.type) {
             case "UPDATE_SETTINGS": {
+                console.log("updating settings");
                 return {
                     [currentChannel] : {
                         ...state[currentChannel],
