@@ -47,7 +47,7 @@ const VideoContextProvider = (props) => {
 
     // variables for managing video settings
     const [currentChannel, setCurrentChannel] = useState(0);
-    const [currentSettings, setCurrentSettings] = useState("blah");
+    const [currentSettings, setCurrentSettings] = useState({});
     const [globalSettings, settingsDispatch] = useReducer(reducer, initialSettings);
     const prevChannelRef = useRef(currentChannel);
 
@@ -66,9 +66,6 @@ const VideoContextProvider = (props) => {
         console.log("context: current settings:");
         console.log(currentSettings);
     }, [currentSettings])
-
-    console.log(`outside of effects:` );
-    console.dir(currentSettings);
 
     // keep current settings up to date with current channel
     // useEffect(()=>{

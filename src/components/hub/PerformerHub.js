@@ -24,42 +24,12 @@ const StyledHub = styled.div`
 
 const PerformerHub = () => {
 
-    //let videoContext = useContext(VideoContext);
-
-    const { videos, setVideos, devices, setDevices } = useContext(VideoContext);
-
-    // video settings will be an array of settings objects that you can switch through like channels
-    // (maybe add a check and don't read off of the canvas if all colours are 0)
-    // const [videoSettings, setVideoSettings] = useState(
-    //     [{
-    //         'left': {
-    //             grayscale: false,
-    //             showRGB: [1,0,0],
-    //             isBlackTransparent: true,
-    //             canvasRef: null
-    //         },
-    //         'bottom': {
-    //             grayscale: false,
-    //             showRGB: [0,1,0],
-    //             isBlackTransparent: true,
-    //             canvasRef: null
-    //         },
-    //         'right': {
-    //             grayscale: false,
-    //             showRGB: [0,0,1],
-    //             isBlackTransparent: true,
-    //             canvasRef: null
-    //         }
-    //     }]); 
-
-    const videoContext = useContext(VideoContext);
-
-    const [currentChannel, setCurrentChannel] = useState(0);
+    const { videos } = useContext(VideoContext)
     
     return (
         <StyledHub>
             <VideoPlayer />
-            <VideoInput display='left' />
+            <VideoInput display='left' videoSource={videos[0]} />
             <VideoInput display='bottom' />
             <VideoInput display='right' />
         </StyledHub>

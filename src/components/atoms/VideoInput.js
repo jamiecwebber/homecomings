@@ -87,15 +87,15 @@ const VideoInput = ({display, videoSource}) => {
     }, [canvasRefs, setCanvasRefs, display])
 
     // handle changing videoSource, not implemented yet  VIDEO
-    // useEffect(()=>{
-    //     if (!videoSource) {
-    //         navigator.mediaDevices.getUserMedia({video:true, audio:false})
-    //             .then((mediaStream)=>{
-    //                 vidRef.current.srcObject = mediaStream;
-    //             });
-    //     }
-    //     vidRef.current.src = videoSource;
-    // }, [videoSource])
+    useEffect(()=>{
+        if (!videoSource) {
+            navigator.mediaDevices.getUserMedia({video:true, audio:false})
+                .then((mediaStream)=>{
+                    vidRef.current.srcObject = mediaStream;
+                });
+        }
+        vidRef.current.src = videoSource;
+    }, [videoSource])
 
     // animation loop, controlled by isPlaying
     useEffect(() => {

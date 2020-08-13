@@ -41,8 +41,6 @@ const VideoInputControls = ( { display } ) => {
 
     useEffect(()=>{
         if (currentSettings) {
-            console.log("current settings changed");
-            console.log(currentSettings);
             prevSettings.current = currentSettings[display];
             setLocalSettings(currentSettings[display]);
         }
