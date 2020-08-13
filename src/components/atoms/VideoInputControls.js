@@ -29,7 +29,7 @@ const VideoInputControls = ( { display } ) => {
 
     const [grayscale, setGrayscale] = useState(false);
     const [isBlackTransparent, setIsBlackTransparent] = useState(false);
-    const [showColour, setShowColour] = useState([1,1,1]);
+    const [showColour, setShowColour] = useState([0,0,0]);
 
     // // keep local settings up to date with global settings
     // useEffect(()=>{
@@ -40,9 +40,12 @@ const VideoInputControls = ( { display } ) => {
     // },[currentSettings, setLocalSettings, display]);
 
     useEffect(()=>{
-        if (currentSettings) {
+        if (currentSettings[display]) {
             prevSettings.current = currentSettings[display];
             setLocalSettings(currentSettings[display]);
+            setGrayscale(currentSettings[display].grayscale);
+            setIsBlackTransparent(currentSettings[display].isBlackTransparent);
+            setShowColour(currentSettings[display].showRGB)
         }
     }, [setLocalSettings, currentSettings, display])
 

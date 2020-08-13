@@ -29,7 +29,7 @@ const PerformerHub = () => {
     return (
         <StyledHub>
             <VideoPlayer />
-            <VideoInput display='left' videoSource={videos[0]} />
+            <VideoInput display='left'  />
             <VideoInput display='bottom' />
             <VideoInput display='right' />
         </StyledHub>

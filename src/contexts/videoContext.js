@@ -9,16 +9,16 @@ const initialSettings = [
     {
     'left':{
         grayscale: false,
-        showRGB: [1,1,1],
+        showRGB: [1,0,0],
         isBlackTransparent: false,},
     'bottom':{
         grayscale: false,
-        showRGB: [1,1,1],
+        showRGB: [0,1,0],
         isBlackTransparent: false,
     }, 
     'right':{
         grayscale: false,
-        showRGB: [1,1,1],
+        showRGB: [0,0,1],
         isBlackTransparent: false,
     }}]
 
@@ -30,8 +30,6 @@ const VideoContextProvider = (props) => {
     const [canvasRefs, setCanvasRefs] = useState({});
 
     const reducer = (state, action) => {
-        console.log('hello from reducer');
-        console.log(action);
         switch(action.type) {
             case "UPDATE_SETTINGS": {
                 console.log("updating settings");
@@ -49,73 +47,19 @@ const VideoContextProvider = (props) => {
     const [currentChannel, setCurrentChannel] = useState(0);
     const [currentSettings, setCurrentSettings] = useState({});
     const [globalSettings, settingsDispatch] = useReducer(reducer, initialSettings);
-    const prevChannelRef = useRef(currentChannel);
 
+    // whenever the global settings or the channel changes, update current settings;
     useEffect(()=>{
-        console.log("setting current settings");
-        console.log(globalSettings[currentChannel]);
         setCurrentSettings(globalSettings[currentChannel]);
     }, [globalSettings, currentChannel]);
 
-    useEffect(()=>{
-        console.log("context: global settings");
-        console.log(globalSettings);
-    },[globalSettings])
 
     useEffect(()=>{
-        console.log("context: current settings:");
-        console.log(currentSettings);
-    }, [currentSettings])
-
-    // keep current settings up to date with current channel
-    // useEffect(()=>{
-    //     if (prevChannelRef.current !== currentChannel){
-    //         setCurrentSettings(globalSettings[currentChannel]);
-    //     }
-    // },[globalSettings, currentChannel])
-
-    // makes sure that the currentSettings always correspond to the correct channel
-    // useEffect(()=>{
-    //     if (currentChannel !== prevChannelRef.current) {
-    //         if (currentChannel < globalSettings.length) {
-    //             setCurrentSettings(globalSettings[currentChannel]);
-    //         } else {
-    //             setGlobalSettings((prev)=>{
-    //                 prev.push(currentSettings);
-    //                 return prev;
-    //             })
-    //         }
-    //         prevChannelRef.current = currentChannel;
-    //     }
-    // }, [currentChannel, setCurrentSettings, currentSettings, globalSettings])
-
-    // useEffect(()=>{
-    //     navigator.mediaDevices.enumerateDevices({video:true, audio:false})
-    //         .then((deviceList)=>{
-    //             // console.log(deviceList);
-    //             setDevices(deviceList)
-    //         })
-    // },[])
-
-    // update global settings when something in the app changes its settings locally
-    // useEffect(()=>{
-    //     console.log("global settings update effect fired")
-    //     if (prevSettingsRef.current !== currentSettings) {
-    //         setGlobalSettings(prevState=>{
-    //             let newSettings = prevState;
-    //             newSettings[currentChannel] = currentSettings;
-    //             console.dir(newSettings[currentChannel]);
-    //             console.log(`Global settings were updated on channel ${currentChannel}`);
-    //             return newSettings;
-    //         })
-    //         prevSettingsRef.current = currentSettings;
-    //     }
-    // }, [currentSettings, currentChannel])
-
-    // update currentSettings when the channel changes
-    // function updateDisplaySettings (display, localSettings) {
-    //     setCurrentSettings({...currentSettings, [display]:localSettings})
-    // }
+        navigator.mediaDevices.enumerateDevices({video:true, audio:false})
+            .then((deviceList)=>{
+                setDevices(deviceList)
+            })
+    },[])
 
     return (
         <VideoContext.Provider value={ { 

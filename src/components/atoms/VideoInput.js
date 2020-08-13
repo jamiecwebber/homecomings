@@ -150,7 +150,7 @@ const VideoInput = ({display, videoSource}) => {
 
     return (
     <StyledInputBox display={display}>
-        <VideoSourceControls videoSource={videoSource} localSettings={localSettings} setLocalSettings={setLocalSettings}/>
+        <VideoSourceControls videoSource={videoSource} />
         <StyledCanvas ref={canvasRef} onClick={handleToggleVideo}></StyledCanvas>
         <VideoInputControls display={display} />
     </StyledInputBox>
