@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-// import { VideoContext } from '../../contexts/VideoContext.js';
+import { VideoContext } from '../../contexts/VideoContext.js';
 import VideoRecorder from './VideoRecorder.js';
 
 const StyledPlayer = styled.div`
@@ -32,33 +32,20 @@ const getPixelRatio = context => {
         return (window.devicePixelRatio || 1) / backingStore;
     };
 
-const VideoPlayer = ({videoSettings, setVideoSettings, currentChannel, setCurrentChannel}) => {
-
+const VideoPlayer = () => {
 
     const canvasRef = useRef(null);
-    let [canvasRefs, setCanvasRefs] = useState({});
+    let { canvasRefs } = useContext(VideoContext);
 
     const [isPlaying, setIsPlaying] = useState(false);
 
+    // for detecting screen resizes, currently deactivated:
     // const [screenSize, setScreenSize] = useState(null);
-    
     // useEffect(() => {
     //     const handleWindowResize = () => setScreenSize(window.innerWidth);
     //     window.addEventListener("resize", handleWindowResize);
     //     return () => window.removeEventListener("resize", handleWindowResize);
     // }, []);
-
-    // set the canvas refs and keep track if they change
-    useEffect(()=> {
-        Object.keys(videoSettings[currentChannel]).map((key)=>{
-            setCanvasRefs(()=>{
-                let newRefs = canvasRefs;
-                newRefs[key] = videoSettings[currentChannel][key].canvasRef.current.getContext('2d');
-                return newRefs;
-            });
-            return null;
-        })
-    }, [videoSettings, canvasRefs, currentChannel]);
 
     // on loading, set inner size of canvas context
     useEffect(() => {
@@ -90,32 +77,11 @@ const VideoPlayer = ({videoSettings, setVideoSettings, currentChannel, setCurren
             // let currentImage = context.getImageData(0, 0, canvas.width, canvas.height);
 
             // get data from the three video streams
-            //context.drawImage(videoRefs['left'], 0, 0, canvas.width, canvas.height);
             let leftImage = canvasRefs['left'].getImageData(0,0,canvas.width, canvas.height);
-
-            //context.drawImage(videoRefs['bottom'], 0, 0, canvas.width, canvas.height);
             let bottomImage = canvasRefs['bottom'].getImageData(0,0,canvas.width, canvas.height);
-
-            //context.drawImage(videoRefs['right'], 0, 0, canvas.width, canvas.height);
             let rightImage = canvasRefs['right'].getImageData(0,0,canvas.width, canvas.height);
 
             // calculate the new frame, using the left image to store the data
-
-            // takes the average of the three channels for each video and plays them in r/g/b channels
-            // for (let i = 0; i < leftImage.data.length; i+=4) {
-            //     leftImage.data[i] = 1.5*(leftImage.data[i] + leftImage.data[i+1] + leftImage.data[i+2])/3;
-            //     leftImage.data[i+1] = 1.5*(bottomImage.data[i] + bottomImage.data[i+1] + bottomImage.data[i+2])/3;
-            //     leftImage.data[i+2] = 1.5*(rightImage.data[i] + rightImage.data[i+1] + rightImage.data[i+2])/3;
-            // };
-
-            // turn off one colour channel of each image
-            // for (let i = 0; i < leftImage.data.length; i+=4) {
-            //     leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i])/1.5;
-            //     leftImage.data[i+1] = (bottomImage.data[i+1] + rightImage.data[i+1])/1.5;
-            //     leftImage.data[i+2] = (rightImage.data[i+2] + leftImage.data[i+2])/1.5;
-            // };
-
-            // displays the average colour of the three videos
             for (let i = 0; i < leftImage.data.length; i+=4) {
                     leftImage.data[i] = (leftImage.data[i] + bottomImage.data[i] + rightImage.data[i]);
                     leftImage.data[i+1] = (leftImage.data[i+1] + bottomImage.data[i+1] + rightImage.data[i+1]);

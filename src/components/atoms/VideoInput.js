@@ -32,21 +32,18 @@ const getPixelRatio = context => {
     return (window.devicePixelRatio || 1) / backingStore;
 };
 
-const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, currentChannel}) => {
+const VideoInput = ({display, videoSource}) => {
 
-    // const [refs, setRefs] = useContext(VideoContext);
+    const { currentChannel, currentSettings, settingsDispatch, canvasRefs, setCanvasRefs } = useContext(VideoContext);
 
+    const [localSettings, setLocalSettings] = useState({
+        grayscale: false,
+        showRGB: [1,1,1],
+        isBlackTransparent: false,})
     const [isPlaying, setIsPlaying ] = useState(false);
 
     const vidRef = useRef(null);
     const canvasRef = useRef(null);
-
-    // on loading, create video element but don't add it to the page   VIDEO
-    useEffect(()=>{
-        vidRef.current = document.createElement('video');
-        vidRef.current.loop = true;
-        vidRef.current.muted = true;
-    },[])
 
     // on loading, set inner size of canvas context  CANVAS
     useEffect(() => {
@@ -65,27 +62,40 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, curr
         canvas.height = height * ratio;
     }, []);
 
+    // on loading, create video element but don't add it to the page   VIDEO
+    useEffect(()=>{
+        vidRef.current = document.createElement('video');
+        vidRef.current.loop = true;
+        vidRef.current.muted = true;
+    },[])
+
+    useEffect(()=>{
+        console.log('about to call dispatch');
+        settingsDispatch({
+            action: "UPDATE_SETTINGS",
+            display: display,
+            payload: localSettings
+        });
+    },[settingsDispatch, display, localSettings])
+
     // on loading, add the canvasRef to the videoSettings and make sure it stays up to date
     useEffect(()=>{
-        if (videoSettings[currentChannel][display].canvasRef !== canvasRef) {
-            setVideoSettings(()=>{
-                let newSettings = videoSettings;
-                newSettings[currentChannel][display].canvasRef = canvasRef;
-                return newSettings;
-            })
+        if (canvasRef.current.getContext('2d') !== canvasRefs[display]) {
+            setCanvasRefs( { ...canvasRefs, [display] : canvasRef.current.getContext('2d') } )
+            console.log(`updated canvasRef of ${display}`);
         }
-    }, [canvasRef, display, currentChannel, videoSettings, setVideoSettings])
+    }, [canvasRefs, setCanvasRefs, display])
 
     // handle changing videoSource, not implemented yet  VIDEO
-    useEffect(()=>{
-        if (!videoSource) {
-            navigator.mediaDevices.getUserMedia({video:true, audio:false})
-                .then((mediaStream)=>{
-                    vidRef.current.srcObject = mediaStream;
-                });
-        }
-        vidRef.current.src = videoSource;
-    }, [videoSource])
+    // useEffect(()=>{
+    //     if (!videoSource) {
+    //         navigator.mediaDevices.getUserMedia({video:true, audio:false})
+    //             .then((mediaStream)=>{
+    //                 vidRef.current.srcObject = mediaStream;
+    //             });
+    //     }
+    //     vidRef.current.src = videoSource;
+    // }, [videoSource])
 
     // animation loop, controlled by isPlaying
     useEffect(() => {
@@ -95,26 +105,25 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, curr
         let requestId;
         const render = () => {
             context.drawImage(vidRef.current, 0, 0, canvas.width, canvas.height);
-            let settings = videoSettings[currentChannel][display]
             let newImage = context.getImageData(0,0,canvas.width, canvas.height);
 
             // this is where the next frame is calculated, depending on the current settings
             
             for (let i = 0; i < newImage.data.length; i+=4) {
 
-                if (settings.grayscale) {
+                if (currentSettings[display].grayscale) {
                     let gray = (newImage.data[i] + newImage.data[i+1] + newImage.data[i+2])/3;
                     newImage.data[i] = gray;
                     newImage.data[i+1] = gray;
                     newImage.data[i+2] = gray;
                 };
 
-                newImage.data[i] *= settings.showRGB[0];
-                newImage.data[i+1] *= settings.showRGB[1];
-                newImage.data[i+2] *= settings.showRGB[2];
+                newImage.data[i] *= currentSettings[display].showRGB[0];
+                newImage.data[i+1] *= currentSettings[display].showRGB[1];
+                newImage.data[i+2] *= currentSettings[display].showRGB[2];
 
 
-                if (settings.isBlackTransparent) {
+                if (currentSettings[display].isBlackTransparent) {
                     let gray = (newImage.data[i] + newImage.data[i+1] + newImage.data[i+2])/3;
                     if (gray <= 20) {
                         newImage.data[i+3] = (gray/20);
@@ -132,7 +141,7 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, curr
         return () => {
             cancelAnimationFrame(requestId);
         }
-    }, [isPlaying, currentChannel, display, videoSettings])
+    }, [isPlaying, currentChannel, display, currentSettings])
 
     const handleToggleVideo = () => {
         isPlaying ? vidRef.current.pause() : vidRef.current.play();
@@ -141,12 +150,9 @@ const VideoInput = ({display, videoSource, videoSettings, setVideoSettings, curr
 
     return (
     <StyledInputBox display={display}>
-        <VideoSourceControls videoSource={videoSource}/>
+        <VideoSourceControls videoSource={videoSource} localSettings={localSettings} setLocalSettings={setLocalSettings}/>
         <StyledCanvas ref={canvasRef} onClick={handleToggleVideo}></StyledCanvas>
-        <VideoInputControls 
-            videoSettings={videoSettings} setVideoSettings={setVideoSettings}
-            display={display}
-            currentChannel={currentChannel} />
+        <VideoInputControls display={display} />
     </StyledInputBox>
     )
 }
