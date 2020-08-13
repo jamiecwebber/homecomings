@@ -12,21 +12,17 @@ const StyledButtonRow = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-`
-
-const StyledButton = styled.button`
-    border-radius: 3px;
-    background: salmon;
+    justify-content: center;
 `
 
 const ColourButton = styled.button`
     width: 35px;
     height: 35px;
     border-radius: 3px;
-    color: ${ props => props.uncheckedColour }
-    border: 2px solid ${ props => props.uncheckedColour }
-    background: ${ props => props.checked ? props.checkedColour : props.uncheckedColour }
+    font-weight: bold;
+    color: ${ props => props.uncheckedColour };
+    border: 2px solid ${ props => props.uncheckedColour };
+    background: ${ props => props.checked ? props.checkedColour : props.uncheckedColour };
 `
 
 const VideoInputControls = ( { display } ) => {
@@ -82,16 +78,13 @@ const VideoInputControls = ( { display } ) => {
 
         <StyledContainer>
             <StyledButtonRow>
-                <StyledButton onClick={toggleGrayscale}>
-                    {grayscale ? "Don't filter to grayscale" : "Filter to grayscale"}
-                </StyledButton>
-                <StyledButton onClick={toggleIsBlackTransparent}>
-                    {isBlackTransparent ? "Don't make black transparent" : "Make black transparent"}</StyledButton>
+                <ColourButton checked={showColour[0] ? true : false} checkedColour="lightcoral" uncheckedColour="darkred" onClick={()=>toggleColour(0)}>✓</ColourButton>
+                <ColourButton checked={showColour[1] ? true : false} checkedColour="lightgreen" uncheckedColour="darkgreen" onClick={()=>toggleColour(1)}>✓</ColourButton>
+                <ColourButton checked={showColour[2] ? true : false} checkedColour="cyan" uncheckedColour="darkblue" onClick={()=>toggleColour(2)}>✓</ColourButton>
             </StyledButtonRow>
             <StyledButtonRow>
-                <ColourButton checked={showColour[0]} checkedColour={'red'} uncheckedColour={'dark red'} onClick={()=>toggleColour(0)}>✓</ColourButton>
-                <ColourButton checked={showColour[1]} checkedColour={'green'} uncheckedColour={'dark green'} onClick={()=>toggleColour(1)}>✓</ColourButton>
-                <ColourButton checked={showColour[2]} checkedColour={'blue'} uncheckedColour={'dark blue'}onClick={()=>toggleColour(2)}>✓</ColourButton>
+                <ColourButton checked={grayscale} checkedColour="ivory" uncheckedColour="gray" onClick={toggleGrayscale}>✓</ColourButton>
+                <ColourButton checked={isBlackTransparent} checkedColour="white" uncheckedColour="black" onClick={toggleIsBlackTransparent}>✓</ColourButton>
             </StyledButtonRow>
         </StyledContainer>
     )
