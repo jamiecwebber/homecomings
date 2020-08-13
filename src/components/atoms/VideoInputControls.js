@@ -25,7 +25,7 @@ const ColourButton = styled.button`
     background: ${ props => props.checked ? props.checkedColour : props.uncheckedColour };
 `
 
-const VideoInputControls = ( { display } ) => {
+const VideoInputControls = ( { display, isPlaying, setIsPlaying } ) => {
 
     const { currentSettings, settingsDispatch } = useContext(VideoContext);
     const [ localSettings, setLocalSettings ] = useState(currentSettings[display]);
@@ -74,6 +74,10 @@ const VideoInputControls = ( { display } ) => {
         setShowColour(newRGB);
     }
 
+    function togglePlaying() {
+        setIsPlaying(!isPlaying);
+    }
+
     return (
 
         <StyledContainer>
@@ -83,6 +87,7 @@ const VideoInputControls = ( { display } ) => {
                 <ColourButton checked={showColour[2] ? true : false} checkedColour="cyan" uncheckedColour="darkblue" onClick={()=>toggleColour(2)}>✓</ColourButton>
             </StyledButtonRow>
             <StyledButtonRow>
+                <ColourButton checked={isPlaying} checkedColour="limegreen" uncheckedColour="forestgreen" onClick={togglePlaying}>✓</ColourButton>
                 <ColourButton checked={grayscale} checkedColour="ivory" uncheckedColour="gray" onClick={toggleGrayscale}>✓</ColourButton>
                 <ColourButton checked={isBlackTransparent} checkedColour="white" uncheckedColour="black" onClick={toggleIsBlackTransparent}>✓</ColourButton>
             </StyledButtonRow>

@@ -143,8 +143,11 @@ const VideoInput = ({display, videoSource}) => {
         }
     }, [isPlaying, currentChannel, display, currentSettings])
 
+    useEffect(()=>{
+        isPlaying ? vidRef.current.play() : vidRef.current.pause();
+    }, [isPlaying])
+
     const handleToggleVideo = () => {
-        isPlaying ? vidRef.current.pause() : vidRef.current.play();
         setIsPlaying(!isPlaying);
     }
 
@@ -152,7 +155,7 @@ const VideoInput = ({display, videoSource}) => {
     <StyledInputBox display={display}>
         <VideoSourceControls videoSource={videoSource} />
         <StyledCanvas ref={canvasRef} onClick={handleToggleVideo}></StyledCanvas>
-        <VideoInputControls display={display} />
+        <VideoInputControls display={display} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
     </StyledInputBox>
     )
 }
