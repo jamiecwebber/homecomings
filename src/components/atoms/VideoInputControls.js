@@ -42,9 +42,16 @@ const VideoInputControls = ( { display, isPlaying, setIsPlaying } ) => {
             setLocalSettings(currentSettings[display]);
             setGrayscale(currentSettings[display].grayscale);
             setIsBlackTransparent(currentSettings[display].isBlackTransparent);
-            setShowColour(currentSettings[display].showRGB)
+            setShowColour(currentSettings[display].showRGB);
+            setIsPlaying(currentSettings[display].playing);
         }
-    }, [setLocalSettings, currentSettings, display])
+    }, [setLocalSettings, currentSettings, setIsPlaying, display])
+
+    useEffect(()=>{
+        if (localSettings && localSettings.playing !== isPlaying) {
+            setLocalSettings({...localSettings, playing: isPlaying})
+        }
+    }, [localSettings, isPlaying])
 
     // checks for updates to local settings and updates global settings accordingly
     useEffect(()=>{
@@ -75,6 +82,7 @@ const VideoInputControls = ( { display, isPlaying, setIsPlaying } ) => {
     }
 
     function togglePlaying() {
+        setLocalSettings({...localSettings, playing: !isPlaying});
         setIsPlaying(!isPlaying);
     }
 
