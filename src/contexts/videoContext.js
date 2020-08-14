@@ -61,7 +61,7 @@ const VideoContextProvider = (props) => {
     useEffect(()=>{
         navigator.mediaDevices.enumerateDevices({video:true, audio:false})
             .then((deviceList)=>{
-                setDevices(deviceList);
+                setDevices(deviceList.filter((device)=>{return (device.kind === "videoinput")}));
             })
     },[])
 

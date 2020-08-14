@@ -32,13 +32,14 @@ const getPixelRatio = context => {
     return (window.devicePixelRatio || 1) / backingStore;
 };
 
-const VideoInput = ({display, videoSource}) => {
+const VideoInput = ({display}) => {
 
     const { currentChannel, currentSettings, videos, devices, canvasRefs, setCanvasRefs } = useContext(VideoContext);
 
     const [isPlaying, setIsPlaying ] = useState(false);
 
     const [videoSource, setVideoSource] = useState(null);
+    const prevVideoSource = useRef(null);
 
     const vidRef = useRef(null);
     const canvasRef = useRef(null);
@@ -60,22 +61,6 @@ const VideoInput = ({display, videoSource}) => {
         canvas.height = height * ratio;
     }, []);
 
-    // on loading, create video element but don't add it to the page   VIDEO
-    useEffect(()=>{
-        vidRef.current = document.createElement('video');
-        vidRef.current.loop = true;
-        vidRef.current.muted = true;
-    },[])
-
-    // useEffect(()=>{
-    //     console.log('about to call dispatch');
-    //     settingsDispatch({
-    //         action: "UPDATE_SETTINGS",
-    //         display: display,
-    //         payload: localSettings
-    //     });
-    // },[settingsDispatch, display, localSettings])
-
     // on loading, add the canvasRef to the videoSettings and make sure it stays up to date
     useEffect(()=>{
         if (canvasRef.current.getContext('2d') !== canvasRefs[display]) {
@@ -84,18 +69,30 @@ const VideoInput = ({display, videoSource}) => {
         }
     }, [canvasRefs, setCanvasRefs, display])
 
+    // on loading, create video element but don't add it to the page   VIDEO
+    useEffect(()=>{
+        vidRef.current = document.createElement('video');
+        vidRef.current.loop = true;
+        vidRef.current.muted = true;
+    },[])
+
     // handle changing videoSource, not implemented yet  VIDEO
     useEffect(()=>{
-        if (!videoSource) {
-            console.log(devices);
-            // navigator.mediaDevices.getUserMedia({video:true, audio:false})
-            //     .then((mediaStream)=>{
-            //         vidRef.current.srcObject = mediaStream;
-            //     });
-        } else {
-            console.log(videos);
+        console.log('videosource fired');
+        if (videoSource && videoSource !== prevVideoSource.current) {
+            if (videoSource.slice(0,8) !== '/static/') {
+                console.log('webcam')
+                navigator.mediaDevices.getUserMedia({deviceId: videoSource.deviceId, video:true})
+                    .then((mediaStream)=>{
+                        vidRef.current.srcObject = mediaStream;
+                        prevVideoSource.current = videoSource;
+                    });
+            } else {
+                
+                vidRef.current.src = videoSource;
+                console.log('video');
+            }
         }
-        // vidRef.current.src = videoSource;
     }, [videoSource, devices, videos])
 
     // animation loop, controlled by isPlaying
@@ -152,13 +149,12 @@ const VideoInput = ({display, videoSource}) => {
     }, [isPlaying])
 
     const handleToggleVideo = () => {
-        console.log("toggling play");
         setIsPlaying(!isPlaying);
     }
 
     return (
     <StyledInputBox display={display}>
-        <VideoSourceControls videoSource={videoSource} />
+        <VideoSourceControls videoSource={videoSource} setVideoSource={setVideoSource} />
         <StyledCanvas ref={canvasRef} onClick={handleToggleVideo}></StyledCanvas>
         <VideoInputControls display={display} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
     </StyledInputBox>
