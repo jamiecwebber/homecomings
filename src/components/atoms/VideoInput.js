@@ -81,15 +81,12 @@ const VideoInput = ({display}) => {
         console.log('videosource fired');
         console.log(videoSource);
         if (videoSource && videoSource !== prevVideoSource.current) {
+            prevVideoSource.current = videoSource;
             if (videoSource.slice(0,8) !== '/static/') {
-                console.log('webcam')
-                vidRef.current.srcObject = null;
+                console.log('webcam');
                 navigator.mediaDevices.getUserMedia({deviceId: videoSource.deviceId, video:true})
                     .then((mediaStream)=>{
-                        console.log(mediaStream);
-                        vidRef.current.src = null;
                         vidRef.current.srcObject = mediaStream;
-                        prevVideoSource.current = videoSource;
                         isPlaying ? vidRef.current.play() : vidRef.current.pause();
                     });
             } else {
