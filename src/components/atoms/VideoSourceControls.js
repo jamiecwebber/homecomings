@@ -17,6 +17,7 @@ const VideoSourceControls = ({videoSource, setVideoSource}) => {
     const { devices, videos } = useContext(VideoContext);
 
     useEffect(()=>{
+        console.log(devices);
         if (devices.length > 0) {
             setVideoSource(devices[0].deviceId);
         }
@@ -29,7 +30,6 @@ const VideoSourceControls = ({videoSource, setVideoSource}) => {
 
     return (
         <div>
-            INPUT SOURCE
             <select onChange={handleInputChange}>
                 { devices.map((device)=><option value={device.deviceId}>{device.label || device.kind}</option>) }
                 <option disabled="disabled">-----</option>

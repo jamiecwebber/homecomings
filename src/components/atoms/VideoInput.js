@@ -34,7 +34,7 @@ const getPixelRatio = context => {
 
 const VideoInput = ({display}) => {
 
-    const { currentChannel, currentSettings, videos, devices, canvasRefs, setCanvasRefs } = useContext(VideoContext);
+    const { currentChannel, currentSettings, videos, devices, getDevices, canvasRefs, setCanvasRefs } = useContext(VideoContext);
 
     const [isPlaying, setIsPlaying ] = useState(false);
 
@@ -79,23 +79,27 @@ const VideoInput = ({display}) => {
     // handle changing videoSource, not implemented yet  VIDEO
     useEffect(()=>{
         console.log('videosource fired');
+        console.log(videoSource);
         if (videoSource && videoSource !== prevVideoSource.current) {
             if (videoSource.slice(0,8) !== '/static/') {
                 console.log('webcam')
                 vidRef.current.srcObject = null;
                 navigator.mediaDevices.getUserMedia({deviceId: videoSource.deviceId, video:true})
                     .then((mediaStream)=>{
+                        console.log(mediaStream);
                         vidRef.current.src = null;
                         vidRef.current.srcObject = mediaStream;
                         prevVideoSource.current = videoSource;
+                        isPlaying ? vidRef.current.play() : vidRef.current.pause();
                     });
             } else {
                 vidRef.current.srcObject = null;
                 vidRef.current.src = videoSource;
                 console.log('video');
+                isPlaying ? vidRef.current.play() : vidRef.current.pause();
             }
         }
-    }, [videoSource, devices, videos])
+    }, [videoSource, isPlaying])
 
     // animation loop, controlled by isPlaying
     useEffect(() => {
@@ -156,9 +160,9 @@ const VideoInput = ({display}) => {
 
     return (
     <StyledInputBox display={display}>
-        <VideoSourceControls videoSource={videoSource} setVideoSource={setVideoSource} />
         <StyledCanvas ref={canvasRef} onClick={handleToggleVideo}></StyledCanvas>
         <VideoInputControls display={display} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
+        <VideoSourceControls videoSource={videoSource} setVideoSource={setVideoSource} />
     </StyledInputBox>
     )
 }

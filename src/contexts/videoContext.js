@@ -57,18 +57,20 @@ const VideoContextProvider = (props) => {
         setCurrentSettings(globalSettings[currentChannel]);
     }, [globalSettings, currentChannel]);
 
+    const getDevices = async () => {
+        await navigator.mediaDevices.getUserMedia({video:true, audio:false});
+        let deviceList = await navigator.mediaDevices.enumerateDevices();
+        setDevices(deviceList.filter((device)=>{return (device.kind === "videoinput")}));
+    }
 
     useEffect(()=>{
-        navigator.mediaDevices.enumerateDevices({video:true, audio:false})
-            .then((deviceList)=>{
-                setDevices(deviceList.filter((device)=>{return (device.kind === "videoinput")}));
-            })
+        getDevices();
     },[])
 
     return (
         <VideoContext.Provider value={ { 
             videos, setVideos, 
-            devices, setDevices, 
+            devices, getDevices, 
             canvasRefs, setCanvasRefs,
             currentSettings, settingsDispatch,
             currentChannel, setCurrentChannel }}>
