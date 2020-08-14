@@ -82,13 +82,15 @@ const VideoInput = ({display}) => {
         if (videoSource && videoSource !== prevVideoSource.current) {
             if (videoSource.slice(0,8) !== '/static/') {
                 console.log('webcam')
+                vidRef.current.srcObject = null;
                 navigator.mediaDevices.getUserMedia({deviceId: videoSource.deviceId, video:true})
                     .then((mediaStream)=>{
+                        vidRef.current.src = null;
                         vidRef.current.srcObject = mediaStream;
                         prevVideoSource.current = videoSource;
                     });
             } else {
-                
+                vidRef.current.srcObject = null;
                 vidRef.current.src = videoSource;
                 console.log('video');
             }
