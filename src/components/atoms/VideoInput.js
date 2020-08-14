@@ -34,13 +34,11 @@ const getPixelRatio = context => {
 
 const VideoInput = ({display, videoSource}) => {
 
-    const { currentChannel, currentSettings, settingsDispatch, canvasRefs, setCanvasRefs } = useContext(VideoContext);
+    const { currentChannel, currentSettings, videos, devices, canvasRefs, setCanvasRefs } = useContext(VideoContext);
 
-    const [localSettings, setLocalSettings] = useState({
-        grayscale: false,
-        showRGB: [1,1,1],
-        isBlackTransparent: false,})
     const [isPlaying, setIsPlaying ] = useState(false);
+
+    const [videoSource, setVideoSource] = useState(null);
 
     const vidRef = useRef(null);
     const canvasRef = useRef(null);
@@ -69,14 +67,14 @@ const VideoInput = ({display, videoSource}) => {
         vidRef.current.muted = true;
     },[])
 
-    useEffect(()=>{
-        console.log('about to call dispatch');
-        settingsDispatch({
-            action: "UPDATE_SETTINGS",
-            display: display,
-            payload: localSettings
-        });
-    },[settingsDispatch, display, localSettings])
+    // useEffect(()=>{
+    //     console.log('about to call dispatch');
+    //     settingsDispatch({
+    //         action: "UPDATE_SETTINGS",
+    //         display: display,
+    //         payload: localSettings
+    //     });
+    // },[settingsDispatch, display, localSettings])
 
     // on loading, add the canvasRef to the videoSettings and make sure it stays up to date
     useEffect(()=>{
@@ -89,13 +87,16 @@ const VideoInput = ({display, videoSource}) => {
     // handle changing videoSource, not implemented yet  VIDEO
     useEffect(()=>{
         if (!videoSource) {
-            navigator.mediaDevices.getUserMedia({video:true, audio:false})
-                .then((mediaStream)=>{
-                    vidRef.current.srcObject = mediaStream;
-                });
+            console.log(devices);
+            // navigator.mediaDevices.getUserMedia({video:true, audio:false})
+            //     .then((mediaStream)=>{
+            //         vidRef.current.srcObject = mediaStream;
+            //     });
+        } else {
+            console.log(videos);
         }
-        vidRef.current.src = videoSource;
-    }, [videoSource])
+        // vidRef.current.src = videoSource;
+    }, [videoSource, devices, videos])
 
     // animation loop, controlled by isPlaying
     useEffect(() => {
@@ -136,7 +137,10 @@ const VideoInput = ({display, videoSource}) => {
             requestId = requestAnimationFrame(render);
         };
         
-        isPlaying ? render() : cancelAnimationFrame(requestId);
+        // might change this for efficiency
+        if (currentSettings[display]){
+            isPlaying ? render() : cancelAnimationFrame(requestId);
+        }
 
         return () => {
             cancelAnimationFrame(requestId);
@@ -148,6 +152,7 @@ const VideoInput = ({display, videoSource}) => {
     }, [isPlaying])
 
     const handleToggleVideo = () => {
+        console.log("toggling play");
         setIsPlaying(!isPlaying);
     }
 

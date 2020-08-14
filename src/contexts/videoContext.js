@@ -10,16 +10,20 @@ const initialSettings = [
     'left':{
         grayscale: false,
         showRGB: [1,0,0],
-        isBlackTransparent: false,},
+        isBlackTransparent: false,
+        playing: false
+    },
     'bottom':{
         grayscale: false,
         showRGB: [0,1,0],
         isBlackTransparent: false,
+        playing: false
     }, 
     'right':{
         grayscale: false,
         showRGB: [0,0,1],
         isBlackTransparent: false,
+        playing: false
     }}]
 
 
@@ -57,7 +61,7 @@ const VideoContextProvider = (props) => {
     useEffect(()=>{
         navigator.mediaDevices.enumerateDevices({video:true, audio:false})
             .then((deviceList)=>{
-                setDevices(deviceList)
+                setDevices(deviceList);
             })
     },[])
 
