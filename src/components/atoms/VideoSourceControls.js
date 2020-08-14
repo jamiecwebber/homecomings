@@ -16,12 +16,12 @@ const VideoSourceControls = ({videoSource, setVideoSource}) => {
 
     const { devices, videos } = useContext(VideoContext);
 
-    useEffect(()=>{
-        console.log(devices);
-        if (devices.length > 0) {
-            setVideoSource(devices[0].deviceId);
-        }
-    },[devices, setVideoSource])
+    // useEffect(()=>{
+    //     console.log(devices);
+    //     if (devices.length > 0) {
+    //         setVideoSource(devices[0].deviceId);
+    //     }
+    // },[devices, setVideoSource])
 
     const handleInputChange = (event) => {
         event.preventDefault();

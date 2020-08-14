@@ -34,7 +34,7 @@ const getPixelRatio = context => {
 
 const VideoInput = ({display}) => {
 
-    const { currentChannel, currentSettings, videos, devices, getDevices, canvasRefs, setCanvasRefs } = useContext(VideoContext);
+    const { currentChannel, currentSettings, videos, devices, canvasRefs, setCanvasRefs } = useContext(VideoContext);
 
     const [isPlaying, setIsPlaying ] = useState(false);
 

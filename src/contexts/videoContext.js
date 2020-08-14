@@ -61,6 +61,7 @@ const VideoContextProvider = (props) => {
         await navigator.mediaDevices.getUserMedia({video:true, audio:false});
         let deviceList = await navigator.mediaDevices.enumerateDevices();
         setDevices(deviceList.filter((device)=>{return (device.kind === "videoinput")}));
+        console.log("device list updated");
     }
 
     useEffect(()=>{
