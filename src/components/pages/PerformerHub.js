@@ -24,7 +24,7 @@ const StyledHub = styled.div`
 
 const PerformerHub = () => {
 
-    const { videos } = useContext(VideoContext)
+    // const { videos } = useContext(VideoContext)
     
     return (
         <StyledHub>

@@ -19,7 +19,7 @@ function App() {
     <div className="App">
       <VideoContextProvider>
         <Router>
-          <nav>
+          {/* <nav>
             <ul>
               <li>
                 <Link to="/">Home</Link>
@@ -37,7 +37,7 @@ function App() {
                 <Link to="/about">About</Link>
               </li>
             </ul>
-          </nav>
+          </nav> */}
           <Switch>
             <Route path="/main">
               <MainPage />
