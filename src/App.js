@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { VideoContextProvider } from './contexts/VideoContext.js';
+// import { VideoContextProvider } from './contexts/VideoContext.js';
 import { 
   BrowserRouter as Router, 
   Switch,
@@ -17,7 +17,7 @@ import WelcomePage from './components/pages/WelcomePage.js';
 function App() {
   return (
     <div className="App">
-      <VideoContextProvider>
+      {/* <VideoContextProvider> */}
         <Router>
           <Switch>
             <Route path="/main">
@@ -37,7 +37,7 @@ function App() {
             </Route>
           </Switch>
         </Router>
-      </VideoContextProvider>
+      {/* </VideoContextProvider> */}
     </div>
   );
 }
