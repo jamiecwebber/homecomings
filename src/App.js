@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 // import { VideoContextProvider } from './contexts/VideoContext.js';
 import { 
@@ -14,6 +14,9 @@ import AboutPage from './components/pages/AboutPage.js';
 import WelcomePage from './components/pages/WelcomePage.js';
 
 function App() {
+  const [ permissionGranted, setPermissionGranted ] = useState(false);
+
+
   return (
     <div className="App">
       {/* <VideoContextProvider> */}
@@ -32,7 +35,7 @@ function App() {
               <PerformerHub />
             </Route> */}
             <Route path="/">
-              <WelcomePage />
+              <WelcomePage permissionGranted={permissionGranted} setPermissionGranted={setPermissionGranted}/>
             </Route>
           </Switch>
         </Router>
