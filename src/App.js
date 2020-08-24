@@ -19,25 +19,6 @@ function App() {
     <div className="App">
       <VideoContextProvider>
         <Router>
-          {/* <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/main">Main</Link>
-              </li>
-              <li>
-                <Link to="/live">Live</Link>
-              </li>
-              <li>
-                <Link to="/performers">Performers</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-            </ul>
-          </nav> */}
           <Switch>
             <Route path="/main">
               <MainPage />
@@ -48,9 +29,9 @@ function App() {
             <Route path="/live">
               <LivePage />
             </Route>
-            <Route path="/performers">
+            {/* <Route path="/performers">
               <PerformerHub />
-            </Route>
+            </Route> */}
             <Route path="/">
               <WelcomePage />
             </Route>

@@ -64,9 +64,9 @@ const VideoContextProvider = (props) => {
         console.log("device list updated");
     }
 
-    useEffect(()=>{
-        getDevices();
-    },[])
+    // useEffect(()=>{
+    //     getDevices();
+    // },[])
 
     return (
         <VideoContext.Provider value={ { 
