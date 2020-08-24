@@ -4,11 +4,10 @@ import './App.css';
 import { 
   BrowserRouter as Router, 
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
-import PerformerHub from './components/pages/PerformerHub.js';
+// import PerformerHub from './components/pages/PerformerHub.js';
 import MainPage from './components/pages/MainPage.js';
 import LivePage from './components/pages/LivePage.js';
 import AboutPage from './components/pages/AboutPage.js';

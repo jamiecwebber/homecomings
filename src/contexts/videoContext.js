@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useReducer} from "react";
+import React, { useState, useEffect,  useReducer} from "react";
 import texture1 from '../media/texture1.mp4';
 import texture2 from '../media/texture2.mp4';
 import texture3 from '../media/texture3.mp4';
