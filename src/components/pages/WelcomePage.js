@@ -16,7 +16,9 @@ function WelcomePage () {
             <StyledTextBox>This website uses all sorts of classic, super-outdated web design stuff, and well, in this day and age you can't
                 just arbitrarily open a random number of popups whenever you would like to.
             </StyledTextBox>
-            <StyledTextBox>Please click below and your browser will prompt you for a permissions for popups, cookies, etc., and then after that you can "enjoy" our site
+            <StyledTextBox>Please click below and your browser will prompt you for a permissions for popups, cookies, etc., and then after that we can harass you with whatever ill-adviced web design decisions we may desire.
+            </StyledTextBox>
+            <StyledTextBox>Hey at least you can't claim we weren't above-board with this
             </StyledTextBox>
             <Link to="/main">Main</Link>
         </div>
