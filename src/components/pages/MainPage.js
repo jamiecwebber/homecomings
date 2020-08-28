@@ -1,16 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import homecomingsBackground from '../../media/homecomings4colours.jpg'
 import styled from 'styled-components';
 
-const Background = styled.div`
-
-    height: 100vh;
-    width: 100vw;
-    background-image: url(${homecomingsBackground});
-    background-position: 'center';
-    background-size: 100%;
-`
+import Background from '../atoms/Background'
+import homecomingsBackground from '../../media/homecomings4colours.jpg'
 
 const Title = styled.h1`
     color: green;
@@ -19,7 +12,7 @@ const Title = styled.h1`
 
 function MainPage () {
     return (
-        <Background>
+        <Background img={homecomingsBackground}>
             <Title>MAIN PAGE</Title>
             {/* <NewWindow name='blah1' features={{'width':200,'height':200}} >
                 <h1>HOMECOMINGS</h1>
