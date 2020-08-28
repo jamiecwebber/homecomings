@@ -2,6 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import  styled  from 'styled-components'
 
+
+import Background from '../atoms/Background'
+import greenTextureBackground from '../../media/greentexture.png'
+
+
 const StyledTextBox = styled.div`
     font-family: "Comic Sans MS", cursive, sans-serif;
     color: red;
@@ -21,7 +26,7 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
     }
 
     return (
-        <div>
+        <Background img={greenTextureBackground}>
             <h1>Welcome to Homecomings</h1>
             <h2>An art thing by harp+</h2>
             <StyledTextBox>This website uses all sorts of classic, super-outdated and ill-advised web design, and well, in this day and age you can't
@@ -34,7 +39,7 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
             <StyledTextBox>Hey at least you can't claim we weren't above-board with this
             </StyledTextBox>
             {permissionGranted ? <button><Link to="/main">Main Page</Link></button> : <button onClick={requestPermission}>Yea that's cool</button> }
-        </div>
+        </ Background>
     )
 }
 
