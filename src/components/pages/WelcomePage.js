@@ -21,7 +21,7 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
     const requestPermission = async () => {
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
             width=0,height=0,left=-1000,top=-1000`;
-        let popup = window.open("about:blank","test", params);
+        // let popup = window.open("about:blank","test", params);
         setPermissionGranted(true);
     }
 
