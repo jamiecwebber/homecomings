@@ -5,6 +5,10 @@ import styled from 'styled-components';
 import Background from '../atoms/Background'
 import homecomingsBackground from '../../media/homecomings4colours.jpg'
 
+import Popup from '../molecules/Popup'
+import blueWavesBackground from '../../media/bluewaves.gif'
+
+
 const Title = styled.h1`
     color: green;
     font-size: 68px;
@@ -21,6 +25,7 @@ function MainPage () {
             <NewWindow name='blah2' features={{'width':230,'height':230}} >
                 <h1>HOMECOMINGS</h1>
             </NewWindow> */}
+            <Popup />
             <Link to='/about'>ABOUT</Link><br/>
             <Link to='/'>back to welcome page</Link>
         </Background>
