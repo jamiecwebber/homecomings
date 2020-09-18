@@ -4,31 +4,53 @@ import  styled  from 'styled-components'
 
 
 import Background from '../atoms/Background'
-import greenTextureBackground from '../../media/greentexture.png'
+import stopBackground from '../../media/stopbackground.png'
 
+
+const StyledHeader = styled.h1`
+    margin: 0px auto;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: table;
+`
+//  text-shadow: -3px -4px 3px rgba(150,150,150,1);
 
 const StyledTextBox = styled.div`
     font-family: "Comic Sans MS", cursive, sans-serif;
-    color: red;
+    color: black;
     margin: 15px auto;
     max-width: 800px;
+    
 `
 
+const StyledDiv = styled.div`
+    z-index: 2;
+    background-color: #C4C4C4;
+    margin: 150px 20% 150px ;
+    padding: 15px;
+    width: 60%;
+    top: 0px;
+    position: absolute;
 
+`
 
 const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
 
     const requestPermission = async () => {
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
             width=0,height=0,left=-1000,top=-1000`;
-        // let popup = window.open("about:blank","test", params);
+        let popup = window.open("about:blank","test", params);
         setPermissionGranted(true);
+        popup.close();
     }
 
     return (
-        <Background img={greenTextureBackground}>
-            <h1>Welcome to Homecomings</h1>
-            <h2>An art thing by harp+</h2>
+        <div>
+        <Background img={stopBackground}></ Background>
+        <StyledDiv>
+            <StyledHeader>Welcome to Homecomings</StyledHeader>
+            <StyledHeader>An art thing by harp+</StyledHeader>
             <StyledTextBox>This website uses all sorts of classic, super-outdated and ill-advised web design, and well, in this day and age you can't
                 just go around arbitrarily opening a random number of popups whenever you would like to.
             </StyledTextBox>
@@ -38,8 +60,10 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
             </StyledTextBox>
             <StyledTextBox>Hey at least you can't claim we weren't above-board with this
             </StyledTextBox>
-            {permissionGranted ? <button><Link to="/main">Main Page</Link></button> : <button onClick={requestPermission}>Yea that's cool</button> }
-        </ Background>
+            {permissionGranted ? <button><Link to="/main">All set? Let's go!</Link></button> : <button onClick={requestPermission}>Yea that's cool</button> }
+        </StyledDiv>
+        </div>
+        
     )
 }
 

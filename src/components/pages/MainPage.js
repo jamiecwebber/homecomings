@@ -10,7 +10,7 @@ import blueWavesBackground from '../../media/bluewaves.gif'
 
 
 const Title = styled.h1`
-    color: green;
+    color: red;
     font-size: 68px;
     margin: 0px;
 `
