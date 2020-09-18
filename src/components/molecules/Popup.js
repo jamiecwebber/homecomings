@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
-const Popup = ({ width, height, left, top, children }) => {
+const Popup = ({ width, height, left, top, page, children }) => {
     const popupRef = useRef();
     const popupContainer = useRef();
 
@@ -16,15 +16,13 @@ const Popup = ({ width, height, left, top, children }) => {
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
         width=${width},height=${height},left=${left},top=${top}`;
 
-        popupRef.current = window.open("about:blank","test", params);
+        popupRef.current = window.open(page,page, params);
         popupRef.current.focus();
         popupRef.current.document.body.appendChild(popupContainer.current);
-        // popupRef.current.document.body.appendChild('<h1>appended</h1>');
-        // popupRef.current.document.body.appendChild(popupContainer.current);
         // return (
-        //     popupRef.current ? popupRef.current.close() : null
+        //     // popupRef.current ? popupRef.current.close() : null
         // )
-    }, [width, height, top, left, children]);
+    }, [width, height, top, left, page, children]);
     
     return (
         null

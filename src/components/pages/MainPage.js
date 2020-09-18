@@ -25,9 +25,10 @@ function MainPage () {
             <NewWindow name='blah2' features={{'width':230,'height':230}} >
                 <h1>HOMECOMINGS</h1>
             </NewWindow> */}
-            <Popup width={300} height={200} left={300} top={500} >
-                <Background img={blueWavesBackground}><h1>HEY</h1></Background>
-            </Popup>
+            <Popup width={300} height={200} left={600} top={150} page={'about'}></Popup>
+            <Popup width={350} height={250} left={50} top={250} page={'welcome'}></Popup>
+            <Popup width={750} height={600} left={150} top={400} page={'blah'}></Popup>
+
             <Link to='/about'>ABOUT</Link><br/>
             <Link to='/'>back to welcome page</Link>
         </Background>
