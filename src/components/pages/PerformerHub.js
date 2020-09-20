@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import VideoInput from '../atoms/VideoInput';
 import VideoPlayer from '../atoms/VideoPlayer';
-import { VideoContext } from '../../contexts/VideoContext';
+// import { VideoContext } from '../../contexts/VideoContext';
 
 const StyledHub = styled.div`
     margin: auto;

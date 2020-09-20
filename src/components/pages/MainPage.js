@@ -9,7 +9,7 @@ import Popup from '../molecules/Popup'
 import PopupImage from '../molecules/PopupImage'
 
 
-import PerformerHub from './PerformerHub.js'
+// import PerformerHub from './PerformerHub.js'
 
 
 import starsBackground from '../../media/blackpixelstars.gif'
