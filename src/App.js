@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-import { VideoContextProvider } from './contexts/VideoContext.js';
+// import { VideoContextProvider } from './contexts/VideoContext.js';
 import { 
   BrowserRouter as Router, 
   Switch,
@@ -12,6 +12,11 @@ import MainPage from './components/pages/MainPage.js';
 import LivePage from './components/pages/LivePage.js';
 import AboutPage from './components/pages/AboutPage.js';
 import WelcomePage from './components/pages/WelcomePage.js';
+
+
+import Background from './components/atoms/Background'
+import blueWavesBackground from './media/bluewaves.gif'
+import ariePicture from './media/arieviola.png'
 
 function App() {
   const [ permissionGranted, setPermissionGranted ] = useState(false);
@@ -34,6 +39,9 @@ function App() {
             {/* <Route path="/performers">
               <PerformerHub />
             </Route> */}
+            <Route path="/arieimage">
+              <Background img={blueWavesBackground}>Arie Picture!<img src={ariePicture} alt='arie!!'></img></Background>
+            </Route>
             <Route path="/">
               <WelcomePage permissionGranted={permissionGranted} setPermissionGranted={setPermissionGranted}/>
             </Route>
