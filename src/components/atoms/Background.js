@@ -2,11 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Background = styled.div`
-    margin: 0px;
     padding: 0px;
     background-image: url(${props => props.img});
-    min-height: 100vh;
-    width: 100%;
+    background-size: cover;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    overflow: auto;
 `
 
 export default Background

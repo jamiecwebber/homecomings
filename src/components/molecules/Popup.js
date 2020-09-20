@@ -3,22 +3,24 @@ import ReactDOM from 'react-dom';
 
 const Popup = ({ width, height, left, top, page, children }) => {
     const popupRef = useRef();
-    const popupContainer = useRef();
+    // const popupContainer = useRef();
 
     useEffect(() => { 
 
-        popupContainer.current = document.createElement('div');
-        console.log(popupContainer.current);
-        console.log(children);
+        // popupContainer.current = document.createElement('div');
+        // console.log(popupContainer.current);
+        // console.log(children);
 
-        ReactDOM.createPortal(children, popupContainer.current);
+        // ReactDOM.createPortal(children, popupContainer.current);
 
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
         width=${width},height=${height},left=${left},top=${top}`;
 
         popupRef.current = window.open(page,page, params);
-        popupRef.current.focus();
-        popupRef.current.document.body.appendChild(popupContainer.current);
+        if (popupRef.current) {
+            popupRef.current.focus()
+        };
+        // popupRef.current.document.body.appendChild(popupContainer.current);
         // return (
         //     // popupRef.current ? popupRef.current.close() : null
         // )
