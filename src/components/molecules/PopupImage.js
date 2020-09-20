@@ -1,11 +1,11 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 const PopupImage = ({ width, height, left, top, pageName, children }) => {
     const popupRef = useRef();
     const popupContainerRef = useRef(document.createElement('div'));
 
-    useLayoutEffect(() => { 
+    useEffect(() => { 
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
         width=${width},height=${height},left=${left},top=${top}`;
 
