@@ -12,6 +12,7 @@ import MainPage from './components/pages/MainPage.js';
 import LivePage from './components/pages/LivePage.js';
 import AboutPage from './components/pages/AboutPage.js';
 import WelcomePage from './components/pages/WelcomePage.js';
+import AnsweringMachine from './components/pages/AnsweringMachine.js';
 
 
 import Background from './components/atoms/Background'
@@ -35,6 +36,9 @@ function App() {
             </Route>
             <Route path="/live">
               <LivePage />
+            </Route>
+            <Route path="/answeringmachine">
+              <AnsweringMachine />
             </Route>
             {/* <Route path="/performers">
               <PerformerHub />

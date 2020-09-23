@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 
+import HomecomingsLetters from '../atoms/HomecomingsLetters'
+
 import Background from '../atoms/Background'
 import homecomingsBackground from '../../media/homecomings4colours.jpg'
 
@@ -16,22 +18,19 @@ import starsBackground from '../../media/blackpixelstars.gif'
 import ariePicture from '../../media/arieviola.png'
 
 
-const Title = styled.h1`
-    color: red;
-    font-size: 68px;
-    margin: 0px;
-`
-
 function MainPage () {
     
     console.log(ariePicture);
     return (
-        <Background img={homecomingsBackground} >
-            <Title>MAIN PAGE</Title>
+        <div>
+            <div style={{top:'0', left:'0', width: '50%', height: '50%', backgroundColor:'#E8EC1F', position:'fixed', zIndex:'-10'}}></div>
+            <div style={{top:'0', left:'50%', width: '50%', height: '50%', backgroundColor:'#EA2525', position:'fixed', zIndex:'-10'}}></div>
+            <div style={{top:'50%', left:'0', width: '50%', height: '50%', backgroundColor:'#3CDE21', position:'fixed', zIndex:'-10'}}></div>
+            <div style={{top:'50%', left:'50%', width: '50%', height: '50%', backgroundColor:'#3545DA', position:'fixed', zIndex:'-10'}}></div>
             {/* <Popup width={300} height={200} left={600} top={150} page={'about'}></Popup>
             <Popup width={350} height={250} left={50} top={250} page={'welcome'}></Popup>
             <Popup width={750} height={600} left={150} top={400} page={'blah'}></Popup> */}
-            <PopupImage width={450} height={300} left={15} top={500} page={'arieimage'}>
+            {/* <PopupImage width={450} height={300} left={15} top={500} page={'arieimage'}>
                 <div style={{
                     padding: '0px',
                     margin: '0px',
@@ -55,11 +54,12 @@ function MainPage () {
                     height: '100%',
                     width: '100%',
                     overflow: 'auto'}}></div>
-            </PopupImage>
+            </PopupImage> */}
+            <HomecomingsLetters />
 
             <Link to='/about'>ABOUT</Link><br/>
             <Link to='/'>back to welcome page</Link>
-        </Background>
+        </div>
         
     )
 }
