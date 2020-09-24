@@ -13,9 +13,20 @@ import PopupImage from '../molecules/PopupImage'
 
 // import PerformerHub from './PerformerHub.js'
 
-
 import starsBackground from '../../media/blackpixelstars.gif'
 import ariePicture from '../../media/arieviola.png'
+
+import answeringMachine from '../../media/Homepage/answeringmachine.png'
+
+
+const StyledAnsweringMachine = styled.img`
+    position: absolute;
+    bottom: 5vh;
+    right: 5vw;
+    width: 14vw;
+    height: 14vw;
+    transform: rotate(-28deg)
+`
 
 
 function MainPage () {
@@ -56,6 +67,7 @@ function MainPage () {
                     overflow: 'auto'}}></div>
             </PopupImage> */}
             <HomecomingsLetters />
+            <StyledAnsweringMachine src={answeringMachine} alt={'answering machine'}></StyledAnsweringMachine>
             <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup>
 
             <Link to='/about'>ABOUT</Link><br/>

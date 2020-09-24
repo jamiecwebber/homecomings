@@ -14,8 +14,8 @@ import Sblock from '../../media/blocks/Sblock.png'
 const StyledLetter = styled.img`
     position: relative;
     top: ${props=>(props.top + 'vh')};
-    height: 6vw;
-    width: 6vw;
+    height: 5vw;
+    width: 5vw;
     transform: rotate(${props=>(props.angle + 'deg')})
 `
 
@@ -40,12 +40,12 @@ const HomecomingsLetters = () => {
         {blockImage: Sblock, alt: 'S'}
     ]
 
-    let top = 10;
+    let top = 22;
     return (
         <div>
             {
                 blocks.map((block) => {
-                    top = top + 6;
+                    top = top + 4;
                     let angle = Math.random() * 20 - 10;
                     return <Letter top={top} angle={angle} blockImage={block.blockImage} alt={block.alt}></Letter>
                 })
