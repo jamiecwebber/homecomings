@@ -5,6 +5,8 @@ import  styled  from 'styled-components'
 
 import Background from '../atoms/Background'
 import stopBackground from '../../media/stopbackground.png'
+import cursor from '../../media/Homepage/my-mouse-pointer.cur'
+import flashingCursor from '../../media/Homepage/FlashingCursor1.ani'
 
 
 const StyledHeader = styled.h1`
@@ -14,7 +16,7 @@ const StyledHeader = styled.h1`
     -webkit-text-fill-color: transparent;
     display: table;
 `
-//  text-shadow: -3px -4px 3px rgba(150,150,150,1);
+// text-shadow: 0px 0px 3px rgba(150,150,150,1);
 
 const StyledTextBox = styled.div`
     font-family: "Comic Sans MS", cursive, sans-serif;
@@ -27,11 +29,19 @@ const StyledTextBox = styled.div`
 const StyledDiv = styled.div`
     z-index: 2;
     background-color: #C4C4C4;
-    margin: 15% 20% ;
+    margin: 10% 20%;
     padding: 15px;
     width: 60%;
-    top: 150px;
+`
 
+const StyledButton = styled.button`
+    cursor: url(${cursor}),auto;
+    background-color: ${props => props.colour};
+
+    &:hover {
+        cursor: url(${flashingCursor}),auto;
+        background-color: ${props => props.hoverColor};
+    }
 `
 
 const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
@@ -44,11 +54,12 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
         popup.close();
     }
 
+    console.log(flashingCursor);
+
     return (
         
-        <Background img={stopBackground}>
-            <div>
-            </div>
+        <Background img={stopBackground} cursor={cursor}>
+            
             <StyledDiv>  
                 <StyledHeader>Welcome to Homecomings</StyledHeader>
                 <StyledHeader>An art thing by harp+</StyledHeader>
@@ -61,7 +72,7 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
                 </StyledTextBox>
                 <StyledTextBox>Hey at least you can't claim we weren't above-board with this
                 </StyledTextBox>
-                {permissionGranted ? <button><Link to="/main">All set? Let's go!</Link></button> : <button onClick={requestPermission}>Yea that's cool</button> }
+                {permissionGranted ? <StyledButton colour={'goldenrod'} hoverColor={'crimson'} ><Link to="/main">All set? Let's go!</Link></StyledButton> : <StyledButton colour={'green'} hoverColor={'hotpink'} onClick={requestPermission}>Yea that's cool</StyledButton> }
             
             </StyledDiv>
         </ Background>

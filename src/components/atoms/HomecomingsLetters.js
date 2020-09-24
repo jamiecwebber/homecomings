@@ -40,7 +40,7 @@ const HomecomingsLetters = () => {
         {blockImage: Sblock, alt: 'S'}
     ]
 
-    let top = 0;
+    let top = 10;
     return (
         <div>
             {

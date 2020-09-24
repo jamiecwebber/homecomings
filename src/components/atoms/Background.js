@@ -9,6 +9,7 @@ const Background = styled.div`
     left: 0px;
     height: 100%;
     overflow: auto;
+    cursor: url(${props => props.cursor}),auto;
 `
 
 export default Background

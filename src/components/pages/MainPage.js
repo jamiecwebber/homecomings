@@ -56,6 +56,7 @@ function MainPage () {
                     overflow: 'auto'}}></div>
             </PopupImage> */}
             <HomecomingsLetters />
+            <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup>
 
             <Link to='/about'>ABOUT</Link><br/>
             <Link to='/'>back to welcome page</Link>
