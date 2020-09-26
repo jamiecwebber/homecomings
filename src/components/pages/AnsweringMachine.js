@@ -26,9 +26,11 @@ const StyledButton = styled.div`
     left: ${props => props.left}px;
     &:hover {
         background-color: rgba(150,0,0,0.3);
+        cursor: pointer;
     }
     &:active {
         background-color: rgba(50,0,0,0.3);
+        cursor: grabbing;
     }
 `
 

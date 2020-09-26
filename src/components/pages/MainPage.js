@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 
@@ -25,13 +25,32 @@ const StyledAnsweringMachine = styled.img`
     right: 5vw;
     width: 12vw;
     height: 12vw;
-    transform: rotate(-18deg)
+    transform: rotate(-18deg);
+
+    &:hover {
+        transform: rotate(-15deg);
+        height: 13vw;
+        width: 13vw;
+        cursor: pointer;
+    }
 `
 
 
 function MainPage () {
-    
-    console.log(ariePicture);
+
+    const popupRef = useRef();
+
+    const openAnsweringMachine = () => {
+
+        let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+        width=520,height=520,left=400,top=50`;
+
+        popupRef.current = window.open('answeringmachine','answeringmachine', params);
+        if (popupRef.current) {
+            popupRef.current.focus()
+        };
+    }
+
     return (
         <div>
             <div style={{top:'0', left:'0', width: '50%', height: '50%', backgroundColor:'#E8EC1F', position:'fixed', zIndex:'-10'}}></div>
@@ -67,8 +86,8 @@ function MainPage () {
                     overflow: 'auto'}}></div>
             </PopupImage> */}
             <HomecomingsLetters />
-            <StyledAnsweringMachine src={answeringMachine} alt={'answering machine'}></StyledAnsweringMachine>
-            <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup>
+            <StyledAnsweringMachine onClick={()=>{openAnsweringMachine()}} src={answeringMachine} alt={'answering machine'}></StyledAnsweringMachine>
+            {/* <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup> */}
 
             <Link to='/about'>ABOUT</Link><br/>
             <Link to='/'>back to welcome page</Link>
