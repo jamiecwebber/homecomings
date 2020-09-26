@@ -33,6 +33,8 @@ const StyledDiv = styled.div`
     margin: 10% 20%;
     padding: 15px;
     width: 60%;
+    
+    font-size: 1.15em;
 `
 
 const StyledButton = styled.button`
