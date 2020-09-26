@@ -32,7 +32,16 @@ const CenterBlurb = styled.div`
 const StyledPar = styled.p`
     font-family: 'comic neue', cursive;
     font-weight: bold;
-    font-size: 30%;
+    font-size: 1vw;
+`
+
+const A = styled.a`
+    color: black;
+
+    &:hover {
+        color: blue;
+        background-color: aqua;
+    }
 `
 
 function AboutPage () {
@@ -45,17 +54,17 @@ function AboutPage () {
                         HOMECOMINGS is a curiosity-drive exploration into our memory of childhood. 
                         </StyledPar>
                         <StyledPar>
-                        Website developed by Jamie Christopher Webber<br/>
-                        Design by Grace Scheele<br/>
+                        Website developed by <A href="https://soundcloud.com/jamiechristopherwebber/" target="_blank">Jamie Christopher Webber</A><br/>
+                        Design by <A href="http://www.gracescheele.com" target='_blank'>Grace Scheele</A><br/>
                         Performed by HARP+
                         </StyledPar>
                         <StyledPar>
-                        HARP+ is an award-winning electroacoustic ensemble comprised of Dave Klassen (Synthesizer), Grace Scheele (Harp/Electronics), and Arie Verheul van de Ven (Viola/Electronics). 
+                        <A href="http://www.harpplus.com" target='_blank'>HARP+</A> is an award-winning electroacoustic ensemble comprised of Dave Klassen (Synthesizer), Grace Scheele (Harp/Electronics), and <A href="https://soundcloud.com/arievandeven" target="_blank">Arie Verheul van de Ven</A> (Viola/Electronics). 
                         </StyledPar>
                         <StyledPar>
-                        We acknowledge the support of the Canada Council for the Arts and the Region of Waterloo Arts Fund.
+                        We acknowledge the support of the <A href="https://www.canadacouncil.ca" target="_blank">Canada Council for the Arts</A> and the <A href="https://artsfund.ca/" target="_blank">Region of Waterloo Arts Fund</A>.
                         </StyledPar>
-                        <Link to='/main'>BACK TO MAIN PAGE</Link>
+                        <StyledPar><Link to='/main'>BACK TO MAIN PAGE</Link></StyledPar>
                         <img style={{position: 'absolute' , bottom: '8%', left: '12%', width: '40%'}} src={ccaLogo} alt="Canada Council for the Arts"></img> <img style={{position: 'absolute',bottom: '4%', right: '15%', width: '12%'}} src={rowLogo} alt="Region of Waterloo Arts Fund"></img>
                     </CenterBlurb>
                 </Background>
