@@ -23,9 +23,9 @@ const StyledAnsweringMachine = styled.img`
     position: absolute;
     bottom: 5vh;
     right: 5vw;
-    width: 14vw;
-    height: 14vw;
-    transform: rotate(-28deg)
+    width: 12vw;
+    height: 12vw;
+    transform: rotate(-18deg)
 `
 
 

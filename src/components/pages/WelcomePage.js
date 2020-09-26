@@ -7,6 +7,7 @@ import Background from '../atoms/Background'
 import stopBackground from '../../media/stopbackground.png'
 import cursor from '../../media/Homepage/my-mouse-pointer.cur'
 import flashingCursor from '../../media/Homepage/FlashingCursor1.ani'
+import greyBackground from '../../media/greybackground.jpg'
 
 
 const StyledHeader = styled.h1`
@@ -20,7 +21,7 @@ const StyledHeader = styled.h1`
 
 const StyledTextBox = styled.div`
     font-family: "Comic Sans MS", cursive, sans-serif;
-    color: black;
+    color: purple;
     margin: 15px auto;
     max-width: 800px;
     
@@ -28,7 +29,7 @@ const StyledTextBox = styled.div`
 
 const StyledDiv = styled.div`
     z-index: 2;
-    background-color: #C4C4C4;
+    background-image: url(${greyBackground});
     margin: 10% 20%;
     padding: 15px;
     width: 60%;
@@ -37,6 +38,9 @@ const StyledDiv = styled.div`
 const StyledButton = styled.button`
     cursor: url(${cursor}),auto;
     background-color: ${props => props.colour};
+    color: lightgray;
+    font-size: 1.2em;
+    padding: 3px;
 
     &:hover {
         cursor: url(${flashingCursor}),auto;
