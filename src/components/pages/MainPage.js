@@ -17,37 +17,106 @@ import starsBackground from '../../media/blackpixelstars.gif'
 import ariePicture from '../../media/arieviola.png'
 
 import answeringMachine from '../../media/Homepage/answeringmachine.png'
-
+import radio from '../../media/Homepage/radio.png'
+import receiver from '../../media/Homepage/telephone-receiver-02.svg'
+import tvScreen from '../../media/Homepage/tv_screen.png'
+import tvStatic from '../../media/Homepage/static.jpg'
 
 const StyledAnsweringMachine = styled.img`
     position: absolute;
     bottom: 5vh;
-    right: 5vw;
-    width: 12vw;
-    height: 12vw;
+    right: 7vw;
+    width: 14vw;
+    height: 14vw;
     transform: rotate(-18deg);
 
     &:hover {
         transform: rotate(-15deg);
-        height: 13vw;
-        width: 13vw;
+        height: 15vw;
+        width: 15vw;
         cursor: pointer;
     }
+`
+const StyledRadio = styled.img`
+    position: absolute;
+    top: 2vw;
+    right: 7vw;
+    height: 18vw;
+    width: 18vw;
+    transform: rotate(15deg);
+
+    &:hover {
+        transform: rotate(10deg);
+        height: 20vw;
+        width: 20vw;
+        right: 8.5vw;
+        cursor: pointer;
+    }
+`
+
+const StyledReceiver = styled.img`
+    position: absolute;
+    top: -3vw;
+    left: 6vw;
+    height: 25vw;
+    width: 25vw;
+    transform: rotate(50deg);
+
+    &:hover {
+        top: -6vw;
+        left: 3vw;
+        height: 30vw;
+        width: 30vw;
+        transform: rotate(52deg);
+        cursor: pointer;
+    }
+`
+
+const StyledTVDiv = styled.div`
+    position: absolute;
+    bottom: 5vw;
+    left: 2vw;
+    width: 22vw;
+    height: 13vw;
+    transform: rotate(12deg);
+
+    &:hover {
+        bottom: 6vw;
+        left: 2.5vw;
+        width: 24vw;
+        height: 15vw;
+        transform: rotate(8deg);
+        cursor: pointer;
+    }
+`
+
+const StyledTV = styled.img`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+`
+
+const StyledStatic = styled.img`
+    position: absolute;
+    bottom: 10%;
+    width: 80%;
+    height: 80%;
+    z-index: 1;
 `
 
 
 function MainPage () {
 
-    const popupRef = useRef();
+    const answeringMachineRef = useRef();
 
     const openAnsweringMachine = () => {
-
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
         width=520,height=520,left=400,top=50`;
 
-        popupRef.current = window.open('answeringmachine','answeringmachine', params);
-        if (popupRef.current) {
-            popupRef.current.focus()
+        answeringMachineRef.current = window.open('answeringmachine','answeringmachine', params);
+        if (answeringMachineRef.current) {
+            answeringMachineRef.current.focus()
         };
     }
 
@@ -86,6 +155,12 @@ function MainPage () {
                     overflow: 'auto'}}></div>
             </PopupImage> */}
             <HomecomingsLetters />
+            <StyledReceiver src={receiver} alt={'phone receiver'}></StyledReceiver>
+            <StyledRadio src={radio} alt={'radio'}></StyledRadio>
+            <StyledTVDiv>
+                <StyledTV src={tvScreen} alt={'tv screen'}></StyledTV>
+                <StyledStatic src={tvStatic} alt={'tv static'}></StyledStatic>
+            </StyledTVDiv>
             <StyledAnsweringMachine onClick={()=>{openAnsweringMachine()}} src={answeringMachine} alt={'answering machine'}></StyledAnsweringMachine>
             {/* <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup> */}
 

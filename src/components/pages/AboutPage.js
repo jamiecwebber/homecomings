@@ -42,6 +42,7 @@ const A = styled.a`
         color: ${props => props.color};
         background-color: ${props => props.background};
         padding: 4px;
+        font-size: 1.05vw;
     }
 `
 

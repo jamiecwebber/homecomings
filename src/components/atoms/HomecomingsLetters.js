@@ -47,7 +47,8 @@ const HomecomingsLetters = () => {
                 blocks.map((block) => {
                     top = top + 4;
                     let angle = Math.random() * 20 - 10;
-                    return <Letter top={top} angle={angle} blockImage={block.blockImage} alt={block.alt}></Letter>
+                    let position = (top + (Math.random()*2 - 1))
+                    return <Letter top={position} angle={angle} blockImage={block.blockImage} alt={block.alt}></Letter>
                 })
             }
         </div>

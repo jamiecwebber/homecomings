@@ -30,7 +30,6 @@ const StyledButton = styled.div`
     }
     &:active {
         background-color: rgba(50,0,0,0.3);
-        cursor: grabbing;
     }
 `
 
