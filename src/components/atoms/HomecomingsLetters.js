@@ -16,12 +16,21 @@ const StyledLetter = styled.img`
     top: ${props=>(props.top + 'vh')};
     height: 5vw;
     width: 5vw;
-    transform: rotate(${props=>(props.angle + 'deg')})
-`
+    transform: rotate(${props=>(props.angle + 'deg')});
+    z-index:3;
 
-const Letter = ({top, angle, blockImage, letter}) => {
+    &:hover {
+        height: 5.3vw;
+        width: 5.3vw;
+        transform: rotate(${props=>(props.bigAngle + 'deg')});
+        z-index: 4;
+    }
+`
+// transform: rotate(${props=>(props.bigAngle + 'deg')});
+
+const Letter = ({top, angle, bigAngle, blockImage, letter}) => {
     return (
-        <StyledLetter top={top} angle={angle} src={blockImage} alt={letter}></StyledLetter>
+        <StyledLetter top={top} angle={angle} bigAngle={bigAngle} src={blockImage} alt={letter}></StyledLetter>
     )
 }
 
@@ -47,8 +56,9 @@ const HomecomingsLetters = () => {
                 blocks.map((block) => {
                     top = top + 4;
                     let angle = Math.random() * 20 - 10;
+                    let bigAngle = angle + (Math.random()*20 - 10);
                     let position = (top + (Math.random()*2 - 1))
-                    return <Letter top={position} angle={angle} blockImage={block.blockImage} alt={block.alt}></Letter>
+                    return <Letter top={position} angle={angle} bigAngle={bigAngle} blockImage={block.blockImage} alt={block.alt}></Letter>
                 })
             }
         </div>

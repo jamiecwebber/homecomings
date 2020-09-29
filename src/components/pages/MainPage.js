@@ -2,6 +2,7 @@ import React, {useRef} from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 
+
 import HomecomingsLetters from '../atoms/HomecomingsLetters'
 
 import Background from '../atoms/Background'
@@ -22,6 +23,11 @@ import receiver from '../../media/Homepage/telephone-receiver-02.svg'
 import tvScreen from '../../media/Homepage/tv_screen.png'
 import tvStatic from '../../media/Homepage/static.jpg'
 
+import FreezeGif from '../atoms/FreezeGif'
+import ballerinaPng from '../../media/Homepage/ballerinaPng.png'
+import ballerinaGif from '../../media/Homepage/ballerina.gif'
+
+
 const StyledAnsweringMachine = styled.img`
     position: absolute;
     bottom: 5vh;
@@ -35,6 +41,7 @@ const StyledAnsweringMachine = styled.img`
         height: 15vw;
         width: 15vw;
         cursor: pointer;
+        z-index: 4;
     }
 `
 const StyledRadio = styled.img`
@@ -105,6 +112,16 @@ const StyledStatic = styled.img`
     z-index: 1;
 `
 
+const Ballerina = styled.div`
+    position: absolute;
+    height: 6vw;
+    width: 6vw;
+    left: 35vw;
+    top: 10vw;
+    transform: rotate(-14deg);
+`
+
+
 
 function MainPage () {
 
@@ -154,6 +171,9 @@ function MainPage () {
                     width: '100%',
                     overflow: 'auto'}}></div>
             </PopupImage> */}
+            <Ballerina>
+                <FreezeGif frozenGif={ballerinaPng} animatedGif={ballerinaGif} />
+            </Ballerina>
             <HomecomingsLetters />
             <StyledReceiver src={receiver} alt={'phone receiver'}></StyledReceiver>
             <StyledRadio src={radio} alt={'radio'}></StyledRadio>
@@ -163,7 +183,7 @@ function MainPage () {
             </StyledTVDiv>
             <StyledAnsweringMachine onClick={()=>{openAnsweringMachine()}} src={answeringMachine} alt={'answering machine'}></StyledAnsweringMachine>
             {/* <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup> */}
-
+            
             <Link to='/about'>ABOUT</Link><br/>
             <Link to='/'>back to welcome page</Link>
         </div>
