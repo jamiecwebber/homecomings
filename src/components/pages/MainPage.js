@@ -26,6 +26,8 @@ import tvStatic from '../../media/Homepage/static.jpg'
 import FreezeGif from '../atoms/FreezeGif'
 import ballerinaPng from '../../media/Homepage/ballerinaPng.png'
 import ballerinaGif from '../../media/Homepage/ballerina.gif'
+import animatedTop from '../../media/Homepage/animatedtop.gif'
+import frozenTop from '../../media/Homepage/frozentop.png'
 
 
 const StyledAnsweringMachine = styled.img`
@@ -48,16 +50,17 @@ const StyledRadio = styled.img`
     position: absolute;
     top: 2vw;
     right: 7vw;
-    height: 18vw;
-    width: 18vw;
+    height: 16vw;
+    width: 16vw;
     transform: rotate(15deg);
 
     &:hover {
         transform: rotate(10deg);
-        height: 20vw;
-        width: 20vw;
+        height: 19vw;
+        width: 19vw;
         right: 8.5vw;
         cursor: pointer;
+        z-index: 5;
     }
 `
 
@@ -117,10 +120,18 @@ const Ballerina = styled.div`
     height: 6vw;
     width: 6vw;
     left: 35vw;
-    top: 10vw;
+    top: 8vw;
     transform: rotate(-14deg);
 `
 
+const ToyTop = styled.div`
+    position: absolute;
+    height: 10vw;
+    width: 10vw;
+    right: 40vw;
+    bottom: 48vh;
+    z-index: 3;
+`
 
 
 function MainPage () {
@@ -174,6 +185,9 @@ function MainPage () {
             <Ballerina>
                 <FreezeGif frozenGif={ballerinaPng} animatedGif={ballerinaGif} />
             </Ballerina>
+            <ToyTop>
+                <FreezeGif frozenGif={frozenTop} animatedGif={animatedTop} />
+            </ToyTop>
             <HomecomingsLetters />
             <StyledReceiver src={receiver} alt={'phone receiver'}></StyledReceiver>
             <StyledRadio src={radio} alt={'radio'}></StyledRadio>
@@ -183,9 +197,9 @@ function MainPage () {
             </StyledTVDiv>
             <StyledAnsweringMachine onClick={()=>{openAnsweringMachine()}} src={answeringMachine} alt={'answering machine'}></StyledAnsweringMachine>
             {/* <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup> */}
-            
+{/*             
             <Link to='/about'>ABOUT</Link><br/>
-            <Link to='/'>back to welcome page</Link>
+            <Link to='/'>back to welcome page</Link> */}
         </div>
         
     )
