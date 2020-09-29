@@ -1,4 +1,4 @@
-import React, { useRef} from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const StyledDiv = styled.img`
@@ -6,16 +6,22 @@ const StyledDiv = styled.img`
     height: 100%;
 `
 
-
-const FreezeGif = ({frozenGif, animatedGif}) => {
+const FreezeGif = ({frozenGif, animatedGif, playOnce}) => {
     const gifRef = useRef();
+    const [reset, setReset] = useState(true);
 
     const mouseOn = () => {
-        gifRef.current.src = animatedGif;
+        if (reset) {
+            gifRef.current.src = animatedGif;
+        }
     }
 
     const mouseOff = () => {
-        gifRef.current.src = frozenGif;
+        if (playOnce) {
+            setReset(false);
+        } else {
+            gifRef.current.src = frozenGif;
+        }
     }
 
     return (

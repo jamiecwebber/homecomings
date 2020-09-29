@@ -28,6 +28,9 @@ import ballerinaPng from '../../media/Homepage/ballerinaPng.png'
 import ballerinaGif from '../../media/Homepage/ballerina.gif'
 import animatedTop from '../../media/Homepage/animatedtop.gif'
 import frozenTop from '../../media/Homepage/frozentop.png'
+import trainAnimated from '../../media/Homepage/trainanimatedonce.gif'
+import trainFrozen from '../../media/Homepage/trainfrozen.png'
+
 
 
 const StyledAnsweringMachine = styled.img`
@@ -133,6 +136,13 @@ const ToyTop = styled.div`
     z-index: 3;
 `
 
+const ToyTrain = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 30vw;
+`
+
 
 function MainPage () {
 
@@ -188,6 +198,9 @@ function MainPage () {
             <ToyTop>
                 <FreezeGif frozenGif={frozenTop} animatedGif={animatedTop} />
             </ToyTop>
+            <ToyTrain>
+                <FreezeGif frozenGif={trainFrozen} animatedGif={trainAnimated} playOnce={true} />
+            </ToyTrain>
             <HomecomingsLetters />
             <StyledReceiver src={receiver} alt={'phone receiver'}></StyledReceiver>
             <StyledRadio src={radio} alt={'radio'}></StyledRadio>
