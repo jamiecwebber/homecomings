@@ -13,6 +13,7 @@ import LivePage from './components/pages/LivePage.js';
 import AboutPage from './components/pages/AboutPage.js';
 import WelcomePage from './components/pages/WelcomePage.js';
 import AnsweringMachine from './components/pages/AnsweringMachine.js';
+import UnderConstructionPopup from './components/pages/UnderConstructionPopup.js'
 
 
 import Background from './components/atoms/Background'
@@ -39,6 +40,9 @@ function App() {
             </Route>
             <Route path="/answeringmachine">
               <AnsweringMachine />
+            </Route>
+            <Route path="/underconstruction">
+              <UnderConstructionPopup />
             </Route>
             {/* <Route path="/performers">
               <PerformerHub />

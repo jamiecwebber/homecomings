@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useRef} from 'react'
 import { Link } from 'react-router-dom'
 import  styled  from 'styled-components'
 
@@ -8,6 +8,8 @@ import stopBackground from '../../media/stopbackground.png'
 import cursor from '../../media/Homepage/my-mouse-pointer.cur'
 import flashingCursor from '../../media/Homepage/FlashingCursor1.ani'
 import greyBackground from '../../media/greybackground.jpg'
+
+import Popup from '../molecules/Popup'
 
 
 const StyledHeader = styled.h1`
@@ -21,7 +23,7 @@ const StyledHeader = styled.h1`
 
 const StyledTextBox = styled.div`
     font-family: "Comic Sans MS", cursive, sans-serif;
-    color: purple;
+    color: darkslateblue;
     margin: 15px auto;
     max-width: 800px;
     
@@ -54,13 +56,13 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
 
     const requestPermission = async () => {
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-            width=0,height=0,left=-1000,top=-1000`;
-        let popup = window.open("about:blank","test", params);
-        setPermissionGranted(true);
-        popup.close();
-    }
+            width=600,height=400,left=200,top=300`;
+        let popup = window.open("underconstruction","underconstruction", params);
 
-    console.log(flashingCursor);
+        if (popup) {
+            setPermissionGranted(true);
+        } 
+    }
 
     return (
         
