@@ -1,6 +1,8 @@
-import React, {useRef} from 'react'
+import React, { useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
+import { AudioContext } from '../../contexts/AudioContext';
+
 
 
 import HomecomingsLetters from '../atoms/HomecomingsLetters'
@@ -146,9 +148,12 @@ const ToyTrain = styled.div`
 
 function MainPage () {
 
+
     const answeringMachineRef = useRef();
 
     const openAnsweringMachine = () => {
+
+
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
         width=520,height=520,left=400,top=50`;
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
-// import { VideoContextProvider } from './contexts/VideoContext.js';
+import { AudioContextProvider } from './contexts/AudioContext.js';
 import { 
   BrowserRouter as Router, 
   Switch,
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div className="App">
-      {/* <VideoContextProvider> */}
+      <AudioContextProvider>
         <Router>
           <Switch>
             <Route path="/main">
@@ -55,7 +55,7 @@ function App() {
             </Route>
           </Switch>
         </Router>
-      {/* </VideoContextProvider> */}
+      </AudioContextProvider>
     </div>
   );
 }
