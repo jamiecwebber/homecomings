@@ -21,7 +21,9 @@ import UnderConstructionPopup from './components/pages/UnderConstructionPopup.js
 
 
 import Background from './components/atoms/Background'
-import blueWavesBackground from './media/bluewaves.gif'
+
+import HomecomingsImage from './components/pages/HomecomingsImage.js'
+import pixelStarsBackground from './media/blackpixelstars.gif'
 import ariePicture from './media/arieviola.png'
 
 function App() {
@@ -57,8 +59,11 @@ function App() {
             {/* <Route path="/performers">
               <PerformerHub />
             </Route> */}
+            <Route path="/homecomingsimage">
+              <HomecomingsImage />            
+            </Route>
             <Route path="/arieimage">
-              <Background img={blueWavesBackground}>Arie Picture!<img src={ariePicture} alt='arie!!'></img></Background>
+              <Background img={pixelStarsBackground}><img style={{width: '80%', height: '80%', margin: ' 15px auto'}} src={ariePicture} alt='arie!!'></img></Background>
             </Route>
             <Route path="/">
               <WelcomePage permissionGranted={permissionGranted} setPermissionGranted={setPermissionGranted}/>
