@@ -12,7 +12,11 @@ import MainPage from './components/pages/MainPage.js';
 import LivePage from './components/pages/LivePage.js';
 import AboutPage from './components/pages/AboutPage.js';
 import WelcomePage from './components/pages/WelcomePage.js';
+
 import AnsweringMachine from './components/pages/AnsweringMachine.js';
+import Radio from './components/pages/Radio.js';
+import TVPopup from './components/pages/TVPopup.js';
+
 import UnderConstructionPopup from './components/pages/UnderConstructionPopup.js'
 
 
@@ -40,6 +44,12 @@ function App() {
             </Route>
             <Route path="/answeringmachine">
               <AnsweringMachine />
+            </Route>
+            <Route path="/radio">
+              <Radio />
+            </Route>
+            <Route path="/tvpopup">
+              <TVPopup />
             </Route>
             <Route path="/underconstruction">
               <UnderConstructionPopup />

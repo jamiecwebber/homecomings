@@ -32,6 +32,8 @@ import animatedTop from '../../media/Homepage/animatedtop.gif'
 import frozenTop from '../../media/Homepage/frozentop.png'
 import trainAnimated from '../../media/Homepage/trainanimatedonce.gif'
 import trainFrozen from '../../media/Homepage/trainfrozen.png'
+import dinoAnimated from '../../media/Homepage/dinotransparent.gif'
+import dinoFrozen from '../../media/Homepage/dino1.png'
 
 
 
@@ -145,21 +147,49 @@ const ToyTrain = styled.div`
     right: 30vw;
 `
 
+const ToyDino = styled.div`
+    position: absolute;
+    top: 5.5vw;
+    left: 57vw;
+    height: 9vw;
+    width: 9vw;
+`
+
 
 function MainPage () {
 
 
     const answeringMachineRef = useRef();
+    const radioRef = useRef();
+    const tvRef = useRef();
 
     const openAnsweringMachine = () => {
-
-
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
         width=520,height=520,left=400,top=50`;
 
         answeringMachineRef.current = window.open('answeringmachine','answeringmachine', params);
         if (answeringMachineRef.current) {
             answeringMachineRef.current.focus()
+        };
+    }
+
+    const openRadio = () => {
+        let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+        width=600,height=600,left=600,top=90`;
+
+        radioRef.current = window.open('radio','radio', params);
+        if (radioRef.current) {
+            radioRef.current.focus()
+        };
+    }
+
+    const openTV = () => {
+        let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+        width=600,height=600,left=150,top=350`;
+
+        tvRef.current = window.open('tvpopup','tvpopup', params);
+        if (tvRef.current) {
+            tvRef.current.focus()
         };
     }
 
@@ -197,23 +227,36 @@ function MainPage () {
                     width: '100%',
                     overflow: 'auto'}}></div>
             </PopupImage> */}
+
             <Ballerina>
                 <FreezeGif frozenGif={ballerinaPng} animatedGif={ballerinaGif} />
             </Ballerina>
+
             <ToyTop>
                 <FreezeGif frozenGif={frozenTop} animatedGif={animatedTop} />
             </ToyTop>
+
+            <ToyDino>
+                <FreezeGif frozenGif={dinoFrozen} animatedGif={dinoAnimated} />
+            </ToyDino>
+
             <ToyTrain>
                 <FreezeGif frozenGif={trainFrozen} animatedGif={trainAnimated} playOnce={true} />
             </ToyTrain>
+
             <HomecomingsLetters />
+
             <StyledReceiver src={receiver} alt={'phone receiver'}></StyledReceiver>
-            <StyledRadio src={radio} alt={'radio'}></StyledRadio>
-            <StyledTVDiv>
+
+            <StyledRadio onClick={()=>{openRadio()}} src={radio} alt={'radio'}></StyledRadio>
+
+            <StyledTVDiv  onClick={()=>{openTV()}}>
                 <StyledTV src={tvScreen} alt={'tv screen'}></StyledTV>
                 <StyledStatic src={tvStatic} alt={'tv static'}></StyledStatic>
             </StyledTVDiv>
+
             <StyledAnsweringMachine onClick={()=>{openAnsweringMachine()}} src={answeringMachine} alt={'answering machine'}></StyledAnsweringMachine>
+            
             {/* <Popup width={520} height={520} left={400} top={50} page={'answeringmachine'}></Popup> */}
 {/*             
             <Link to='/about'>ABOUT</Link><br/>
