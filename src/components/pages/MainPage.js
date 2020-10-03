@@ -24,6 +24,8 @@ import radio from '../../media/Homepage/radio.png'
 import receiver from '../../media/Homepage/telephone-receiver-02.svg'
 import tvScreen from '../../media/Homepage/tv_screen.png'
 import tvStatic from '../../media/Homepage/static.jpg'
+import spinningStar from '../../media/Homepage/spinningstar.gif'
+import rollingStar from '../../media/Homepage/rollingstar.gif'
 
 import FreezeGif from '../atoms/FreezeGif'
 import ballerinaPng from '../../media/Homepage/ballerinaPng.png'
@@ -122,6 +124,27 @@ const StyledStatic = styled.img`
     z-index: 1;
 `
 
+const StyledLiveSign = styled.div`
+    position: absolute;
+    bottom: 95%;
+    left: 105%;
+    width: 200px;
+    height: 75px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: yellow;
+    border-radius: 50px;
+    border: 3px;
+    border-color: black;
+    z-index:5;
+    color: red;
+    font-size: 30px;
+    font-family: impact;
+    
+    transform: rotate(-12deg);
+`
+
 const Ballerina = styled.div`
     position: absolute;
     height: 6vw;
@@ -185,7 +208,7 @@ function MainPage () {
 
     const openTV = () => {
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-        width=1100,height=580,left=150,top=60`;
+        width=1100,height=640,left=150,top=60`;
 
         tvRef.current = window.open('tvpopup','tvpopup', params);
         if (tvRef.current) {
@@ -251,6 +274,11 @@ function MainPage () {
             <StyledRadio onClick={()=>{openRadio()}} src={radio} alt={'radio'}></StyledRadio>
 
             <StyledTVDiv  onClick={()=>{openTV()}}>
+                <StyledLiveSign>
+                    <img src={spinningStar} alt={"spinning star"}></img>
+                    LIVE
+                    <img src={rollingStar} alt={"spinning star"}></img>
+                </StyledLiveSign>
                 <StyledTV src={tvScreen} alt={'tv screen'}></StyledTV>
                 <StyledStatic src={tvStatic} alt={'tv static'}></StyledStatic>
             </StyledTVDiv>

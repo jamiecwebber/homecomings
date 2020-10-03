@@ -32,10 +32,23 @@ const TVContainer = styled.div`
     width: 895px;
 `
 
+const StyledMarquee = styled.marquee`
+    font-family: cursive;
+    color: hotpink;
+    font-size: 22px;
+    margin-top: 15px;
+`
+
 const TVPopup = () => {
 
     return (
         <Background img={nicelightblue}>
+            
+
+            <StyledMarquee behavior="scroll" direction="left">Thank you for joining us for HOMECOMINGS! Live performances Saturday at 8pm and Sunday breakfast cereal and morning cartoons edition at 10am!
+            </StyledMarquee>
+
+
             <TVContainer>
                 <StyledTV src={tvScreen} alt={'tv screen'}></StyledTV>
                 <YoutubeDiv>

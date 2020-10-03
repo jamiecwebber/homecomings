@@ -56,7 +56,7 @@ const WelcomePage = ({permissionGranted, setPermissionGranted}) => {
 
     const requestPermission = async () => {
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-            width=600,height=400,left=200,top=300`;
+            width=600,height=500,left=200,top=300`;
         let popup = window.open("underconstruction","underconstruction", params);
 
         if (popup) {
