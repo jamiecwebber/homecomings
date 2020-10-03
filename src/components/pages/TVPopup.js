@@ -52,7 +52,7 @@ const TVPopup = () => {
             <TVContainer>
                 <StyledTV src={tvScreen} alt={'tv screen'}></StyledTV>
                 <YoutubeDiv>
-                    <iframe title="Live" width="560" height="315" src="https://www.youtube.com/embed/KMMY1b2aBMQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+                    <iframe title="Live" width="560" height="315" src="https://www.youtube.com/embed/429SEI8DbwI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
                 </YoutubeDiv>
             </TVContainer>
         </Background>
