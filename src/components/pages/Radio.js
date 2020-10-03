@@ -30,8 +30,8 @@ const StyledImg = styled.img`
 `
 
 const StyledButton = styled.div`
-    height: 34px;
-    width: 21px;
+    height: 17px;
+    width: 16px;
     position: absolute;
     top: ${props => props.top}px;
     left: ${props => props.left}px;
@@ -99,9 +99,9 @@ const Radio = () => {
     return (
         <Background img={bluePointy} pattern={'repeat'}>
             <StyledDiv>
-                {/* <StyledButton top={345} left={268} onClick={playRecording}></StyledButton>
-                <StyledButton top={345} left={314} onClick={prevRecording}></StyledButton>
-                <StyledButton top={345} left={361} onClick={nextRecording}></StyledButton> */}
+                <StyledButton top={388} left={195} onClick={prevRecording}></StyledButton>
+                <StyledButton top={388} left={215} onClick={playRecording}></StyledButton>
+                <StyledButton top={388} left={235} onClick={nextRecording}></StyledButton>
                 <StyledImg src={radioImage} alt={'*radio static*'}>
                 </StyledImg>
             </StyledDiv>
