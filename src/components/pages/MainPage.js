@@ -185,7 +185,7 @@ function MainPage () {
 
     const openTV = () => {
         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-        width=600,height=600,left=150,top=350`;
+        width=1100,height=580,left=150,top=60`;
 
         tvRef.current = window.open('tvpopup','tvpopup', params);
         if (tvRef.current) {
