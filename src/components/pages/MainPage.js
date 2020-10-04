@@ -315,11 +315,11 @@ function MainPage () {
             <StyledRadio onClick={()=>{openRadio()}} src={radio} alt={'radio'}></StyledRadio>
 
             <StyledTVDiv  onClick={()=>{openTV()}}>
-                {/* <StyledLiveSign>
+                <StyledLiveSign>
                     <img src={spinningStar} alt={"spinning star"}></img>
                     LIVE
                     <img src={rollingStar} alt={"spinning star"}></img>
-                </StyledLiveSign> */}
+                </StyledLiveSign>
                 <StyledTV src={tvScreen} alt={'tv screen'}></StyledTV>
                 <StyledStatic src={tvStatic} alt={'tv static'}></StyledStatic>
             </StyledTVDiv>
