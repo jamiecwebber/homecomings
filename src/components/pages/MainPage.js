@@ -35,6 +35,8 @@ import trainAnimated from '../../media/Homepage/trainanimatedonce.gif'
 import trainFrozen from '../../media/Homepage/trainfrozen.png'
 import dinoAnimated from '../../media/Homepage/dinotransparent.gif'
 import dinoFrozen from '../../media/Homepage/dino1.png'
+import pianoAnimated from '../../media/Homepage/pianoanimated.gif'
+import pianoFrozen from '../../media/Homepage/pianofrozen.png'
 
 
 
@@ -174,6 +176,14 @@ const ToyDino = styled.div`
     width: 9vw;
 `
 
+const ToyPiano = styled.div`
+    position: absolute;
+    bottom: 11vw;
+    left: 41vw;
+    height: 4.25vw;
+    width: 11.3vw;
+`
+
 const AboutLink = styled.div`
     position: absolute;
     display: flex;
@@ -293,6 +303,10 @@ function MainPage () {
             <ToyTrain>
                 <FreezeGif frozenGif={trainFrozen} animatedGif={trainAnimated} playOnce={true} />
             </ToyTrain>
+
+            <ToyPiano>
+                <FreezeGif frozenGif={pianoFrozen} animatedGif={pianoAnimated} />
+            </ToyPiano>
 
             <HomecomingsLetters />
 
